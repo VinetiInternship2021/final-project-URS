@@ -1,3 +1,35 @@
 import * as api from './authenticationApi';
 
-//TODO: add authentication related actions here
+// Register user
+export const registerUser = userData => async (dispatch) => {
+    try {
+        const { data } = await api.register(userData);
+        dispatch(setCurrentUser(data));
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+// Login user
+export const loginUser = userData => async (dispatch) => {
+    try {
+        const { data } = await api.login(userData);
+        dispatch(setCurrentUser(data));
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+// Set logged in user
+export const setCurrentUser = user => {
+    return {
+        type: 'SET_CURRENT_USER',
+        payload: user
+    };
+};
+
+// Log user out
+export const logoutUser = () => dispatch => {
+    dispatch(setCurrentUser({}));
+    window.location.href = './';
+};

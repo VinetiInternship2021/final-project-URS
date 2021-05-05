@@ -1,3 +1,6 @@
 import axios from 'axios/index';
 
-//TODO: add axios calls related to authentication here
+const url = 'http://localhost:8080';
+
+export const login = (user) => axios.post(`${url}/user`, user);
+export const register = (user) => axios.post(`${url}/user/register`, user);
