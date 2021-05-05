@@ -1,5 +1,4 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
 import {
     BrowserRouter as Router,
     Switch,
@@ -8,27 +7,20 @@ import {
 
 import './App.css';
 
+import SignIn from './components/authentication/signIn/SignIn';
+import SignUp from "./components/authentication/signUp/SignUp";
+
 function App() {
     return (
         <Router>
-            <div>
                 <Switch>
                     <Route exact path="/">
-                        <Typography component="h6"
-                                    variant="h6"
-                                    align="center">
-                            University room schedule app
-                        </Typography> </Route>
-
-                    <Route exact path="/login">
-                        <Typography component="h6"
-                                    variant="h6"
-                                    align="center">
-                            University room schedule login
-                        </Typography>
+                        <SignIn> </SignIn>
+                    </Route>
+                    <Route exact path="/signUp">
+                        <SignUp> </SignUp>
                     </Route>
                 </Switch>
-            </div>
         </Router>
     );
 }
