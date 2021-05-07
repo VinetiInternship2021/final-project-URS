@@ -12,7 +12,6 @@ import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../../../redux/authentication/authenticationActions';
 
-
 const SignUp =  function () {
     const [userData, setUserData] = useState({
         email: '',
