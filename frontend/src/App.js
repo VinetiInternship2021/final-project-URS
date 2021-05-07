@@ -8,7 +8,8 @@ import {
 import './App.css';
 
 import SignIn from './components/authentication/signIn/SignIn';
-import SignUp from "./components/authentication/signUp/SignUp";
+import SignUp from './components/authentication/signUp/SignUp';
+import Dashboard from './components/dashboard/Dashboard';
 
 function App() {
     return (
@@ -19,6 +20,9 @@ function App() {
                     </Route>
                     <Route exact path="/signUp">
                         <SignUp> </SignUp>
+                    </Route>
+                    <Route exact path="/dashboard">
+                        <Dashboard> </Dashboard>
                     </Route>
                 </Switch>
         </Router>
