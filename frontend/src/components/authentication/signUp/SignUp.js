@@ -9,8 +9,9 @@ import {
 } from '@material-ui/core';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
-import { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { registerUser } from '../../../redux/authentication/authenticationActions';
+import { useStyles } from './styles';
 
 const SignUp =  function () {
     const [userData, setUserData] = useState({
@@ -20,6 +21,8 @@ const SignUp =  function () {
         role: 'student'
     });
     const dispatch = useDispatch();
+    const classes = useStyles();
+    let error = useSelector(state => state.auth.registerError);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -44,6 +47,9 @@ const SignUp =  function () {
                         </RadioGroup>
                     </Grid>
                     <Grid item xs={12}>
+                        <Grid item xs={12}>
+                            { error && <p className={classes.errorMessage}>Registration failed</p> }
+                        </Grid>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <TextValidator

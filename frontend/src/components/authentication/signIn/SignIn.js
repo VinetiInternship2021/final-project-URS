@@ -8,15 +8,19 @@ import {
 import { Link } from 'react-router-dom';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../../redux/authentication/authenticationActions';
 
+import { useStyles } from './styles';
+
 const SignIn =  function () {
+    const dispatch = useDispatch();
+    const classes = useStyles();
     const [userData, setUserData] = useState({
         email: '',
         password: ''
     });
-    const dispatch = useDispatch();
+    let error = useSelector(state => state.auth.loginError);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,7 +29,7 @@ const SignIn =  function () {
     };
 
     return (
-            <Container maxWidth='xs'>
+              <Container maxWidth='xs'>
                 <ValidatorForm autoComplete="off" onSubmit={handleSubmit}>
                     <Grid container spacing={3}
                           direction='column'
@@ -34,6 +38,9 @@ const SignIn =  function () {
                           style={{ minHeight: '100vh' }}>
                         <Grid item xs={12}> Sign In to URS </Grid>
                         <Grid item xs={12}>
+                            <Grid item xs={12}>
+                                { error && <p className={classes.errorMessage}>Sign in failed</p> }
+                            </Grid>
                             <Grid container spacing={2}>
                                 <Grid item xs={12}>
                                     <TextValidator
