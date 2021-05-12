@@ -10,12 +10,73 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_06_153301) do
+ActiveRecord::Schema.define(version: 2021_05_07_175042) do
+
+  create_table "availabilities", force: :cascade do |t|
+    t.time "starts_at"
+    t.time "ends_at"
+    t.datetime "day_of_week"
+    t.boolean "holiday"
+    t.integer "room_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["room_id"], name: "index_availabilities_on_room_id"
+  end
+
+  create_table "class_rooms", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "conference_rooms", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "event_bookings", force: :cascade do |t|
+    t.integer "event_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["event_id"], name: "index_event_bookings_on_event_id"
+    t.index ["user_id"], name: "index_event_bookings_on_user_id"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.integer "seats_limit"
+    t.string "subject"
+    t.text "description"
+    t.string "event_title"
+    t.integer "event_type"
+    t.integer "room_booking_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["room_booking_id"], name: "index_events_on_room_booking_id"
+  end
 
   create_table "jwt_denylist", force: :cascade do |t|
     t.string "jti", null: false
     t.datetime "exp", null: false
     t.index ["jti"], name: "index_jwt_denylist_on_jti"
+  end
+
+  create_table "room_bookings", force: :cascade do |t|
+    t.integer "available_seats"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.integer "user_id", null: false
+    t.integer "room_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["room_id"], name: "index_room_bookings_on_room_id"
+    t.index ["user_id"], name: "index_room_bookings_on_user_id"
+  end
+
+  create_table "rooms", force: :cascade do |t|
+    t.integer "seats_count"
+    t.string "room_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -31,4 +92,10 @@ ActiveRecord::Schema.define(version: 2021_05_06_153301) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "availabilities", "rooms"
+  add_foreign_key "event_bookings", "events"
+  add_foreign_key "event_bookings", "users"
+  add_foreign_key "events", "room_bookings"
+  add_foreign_key "room_bookings", "rooms"
+  add_foreign_key "room_bookings", "users"
 end
