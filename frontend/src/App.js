@@ -10,21 +10,16 @@ import './App.css';
 import SignIn from './components/authentication/signIn/SignIn';
 import SignUp from './components/authentication/signUp/SignUp';
 import Dashboard from './components/dashboard/Dashboard';
+import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
 
 function App() {
     return (
         <Router>
-                <Switch>
-                    <Route exact path="/">
-                        <SignIn> </SignIn>
-                    </Route>
-                    <Route exact path="/signUp">
-                        <SignUp> </SignUp>
-                    </Route>
-                    <Route exact path="/dashboard">
-                        <Dashboard> </Dashboard>
-                    </Route>
-                </Switch>
+            <Switch>
+                <Route exact path="/" component={SignIn}/>
+                <Route exact path="/signUp" component={SignUp}/>
+                <PrivateRoute exact path="/dashboard" component={Dashboard}/>
+            </Switch>
         </Router>
     );
 }
