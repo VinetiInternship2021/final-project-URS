@@ -15,7 +15,7 @@ const Logout =  function () {
         dispatch(logoutUser());
         history.push('./');
     };
-    // color='primary' fullWidth type='submit' variant='contained'
+
     return (
         <Button onClick={() => logout()}>
             <ExitIcon /> Logout
