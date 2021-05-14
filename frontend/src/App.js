@@ -10,7 +10,7 @@ import './App.css';
 import SignIn from './components/authentication/signIn/SignIn';
 import SignUp from './components/authentication/signUp/SignUp';
 import Dashboard from './components/dashboard/Dashboard';
-import { PrivateRoute } from './components/privateRoute/PrivateRoute';
+import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
 
 function App() {
     return (
