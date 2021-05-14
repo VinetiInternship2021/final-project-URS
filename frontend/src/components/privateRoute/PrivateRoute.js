@@ -13,7 +13,7 @@ function PrivateRoute({ component: Component, roles, ...rest }) {
             const token = localStorage.getItem('jwtToken');
             if (!token) {
                 // not logged in so redirect to login page with the return url
-                return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+                return <Redirect to={{ pathname: '/', state: { from: props.location } }} />
             }
             const decoded = jwt_decode(token);
             const currentTime = Date.now() / 1000; // to get in milliseconds
@@ -21,7 +21,7 @@ function PrivateRoute({ component: Component, roles, ...rest }) {
                 // Logout user
                 dispatch(logoutUser());
                 // Redirect to login
-                return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+                return <Redirect to={{ pathname: '/', state: { from: props.location } }} />
             }
 
             // logged in so return component
