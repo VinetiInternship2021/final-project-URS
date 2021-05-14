@@ -6,6 +6,7 @@ import {
     Typography
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,6 +17,7 @@ import { useStyles } from './styles';
 const SignIn =  function () {
     const dispatch = useDispatch();
     const classes = useStyles();
+    const history = useHistory();
     const [userData, setUserData] = useState({
         email: '',
         password: ''
@@ -25,7 +27,7 @@ const SignIn =  function () {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        dispatch(loginUser(userData));
+        dispatch(loginUser(userData)).then(() => history.push('./dashboard'));
     };
 
     return (

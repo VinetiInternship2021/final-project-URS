@@ -12,6 +12,7 @@ export const registerUser = userData => async (dispatch) => {
         window.location.href = './';
     } catch (error) {
         dispatch(registrationFail(error));
+        throw error;
     }
 };
 
@@ -24,21 +25,20 @@ export const loginUser = userData => async (dispatch) => {
         setAuthToken(response.headers['authorization']);
 
         dispatch(setCurrentUser(response.data));
-        window.location.href = './dashboard';
     } catch (error) {
         dispatch(loginFail(error));
+        throw error;
     }
 };
 
 // Log user out
 export const logoutUser = () => async (dispatch) => {
-    await api.logout();
-
     localStorage.removeItem('jwtToken');
     setAuthToken(false);
 
+    await api.logout();
+
     dispatch(setCurrentUser({}));
-    window.location.href = './';
 };
 
 // Set logged in user
