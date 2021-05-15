@@ -1,7 +1,6 @@
 import React from 'react';
 import {
     BrowserRouter as Router,
-    Switch,
     Route
 } from 'react-router-dom';
 
@@ -11,15 +10,25 @@ import SignIn from './components/authentication/signIn/SignIn';
 import SignUp from './components/authentication/signUp/SignUp';
 import Dashboard from './components/dashboard/Dashboard';
 import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
+import NavBar from './components/navbar/Navbar';
+import Users from './components/users/Users';
+
+const adminLinks = [
+    { title: 'users', path: '/dashboard/users' },
+    { title: 'rooms', path: '/dashboard/rooms' },
+    { title: 'events', path: '/dashboard/events' }
+];
 
 function App() {
     return (
         <Router>
-            <Switch>
-                <Route exact path="/" component={SignIn}/>
-                <Route exact path="/signUp" component={SignUp}/>
-                <PrivateRoute exact path="/dashboard" component={Dashboard}/>
-            </Switch>
+            <Route exact path='/' component={SignIn}/>
+            <Route exact path='/signUp' component={SignUp}/>
+
+            <PrivateRoute path='/dashboard/:page' component={() => <NavBar navLinks={adminLinks}/>}/>
+            <PrivateRoute exact path='/dashboard' component={() => <NavBar navLinks={adminLinks}/>}/>
+            <PrivateRoute exact path='/dashboard' component={Dashboard}/>
+            <PrivateRoute exact path='/dashboard/users' component={Users}/>
         </Router>
     );
 }
