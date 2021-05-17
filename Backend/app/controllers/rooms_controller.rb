@@ -1,14 +1,24 @@
 class RoomsController < ApplicationController
-   before_action :set_room, only: [:show, :update, :destroy, :createAvailability, :updateAvailability]
+   before_action :set_room, only: [:show, :update, :destroy, :createAvailability, :updateAvailability, :index_availabilities]
+       before_action :authenticate_user!, except: [ :index, :create, :index_availabilities]
+
 
 #
   # GET /rooms
   def index
-    if !params[:room_type].blank?
-    rooms.filter_room(params[:room_type])
-    else @rooms = Room.all
+    @rooms = Room.all
+   if !params[:room_type].blank?
+   @rooms=Room.filter_room(params[:room_type])
+   
+    #     render json: @rooms
   end
-    render json: @rooms
+   render json: @rooms
+  end
+
+  def index_availabilities
+   
+    @availabilities=@room.availabilities.all
+    render json: {availabilities: @availabilities}
   end
 
   # GET /rooms/1
@@ -35,18 +45,19 @@ class RoomsController < ApplicationController
       render json: @room.errors, status: :unprocessable_entity
     end
   end
-  
+   #POST  /room/room_id/
   def createAvailability
-    unless room.blank?
-    @availability=Availability.create(availability_params)
-    render json: @availability
-    end
+  
+    @availability = @room.availabilities.new(availability_params)
+   # @availaility.room_id = room.id
+    @availability.save
+    
   end
-
   
   def updateAvailability
+    #set_room
     unless @room.blank? && @room.availability.empty?
-    room.availability.update(availability_params)
+    @room.availability.update(availability_params)
     end
     render json: "succussfully updated"
   end
@@ -58,8 +69,7 @@ class RoomsController < ApplicationController
 
   private
     def availability_params
-      
-        params.require(:availability).permit(:starts_at, :ends_at,:day_of_week, :holiday, :room_id)
+      params.require(:availability).permit(:starts_at, :ends_at, :day_of_week, :holiday)
     end
     # Use callbacks to share common setup or constraints between actions.
     def set_room

@@ -1,11 +1,12 @@
 class RoomBookingsController < ApplicationController
  before_action :set_room_booking, only: [:show, :update, :destroy]
+ before_action :set_user,only:[:index, :create]
   
 
   # GET /room_bookings
   def index
-
-    render json: @curent_user.room_bookings
+    render json: @current_user.room_bookings
+   # render json: @room_bookings.where( id: current_user.id)
   end
 
   # GET /room_bookings/1
@@ -16,7 +17,7 @@ class RoomBookingsController < ApplicationController
   # POST /room_bookings
   def create
 
-    @room_booking = @curent_user.room_bookings.new(room_booking_params)
+    @room_booking = @current_user.room_bookings.new(room_booking_params)
 
     if @room_booking.save
       render json: @room_booking, status: :created, location: @room_booking
@@ -31,9 +32,9 @@ class RoomBookingsController < ApplicationController
   end
 
   private
-   # def set_user
-   #   @user=current_user 
-   # end
+    def set_user
+      @user=current_user 
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_room_booking
       @room_booking = RoomBooking.find(params[:id])

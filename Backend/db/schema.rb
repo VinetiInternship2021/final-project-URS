@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_07_175042) do
+ActiveRecord::Schema.define(version: 2021_05_15_093447) do
 
   create_table "availabilities", force: :cascade do |t|
     t.time "starts_at"
@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 2021_05_07_175042) do
 
   create_table "rooms", force: :cascade do |t|
     t.integer "seats_count"
-    t.string "room_type"
+    t.integer "room_type", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

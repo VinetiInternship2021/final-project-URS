@@ -1,9 +1,11 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :update, :destroy]
+  before_action :set_user,only:[:index, :create]
+
 
   # GET /events
   def index
-    @events = Event.all
+     @event_bookings=@current_user.events  
 
     render json: @events
   end
@@ -39,6 +41,9 @@ class EventsController < ApplicationController
   end
 
   private
+    def set_user
+      @user=current_user 
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_event
       @event = Event.find(params[:id])
