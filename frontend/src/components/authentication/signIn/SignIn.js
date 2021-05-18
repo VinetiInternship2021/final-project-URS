@@ -79,7 +79,7 @@ const SignIn =  function () {
                         </Grid>
                         <Grid item xs={12}>
                             <Typography>
-                                Don't have an account?
+                                Dont have an account?
                                 <Button component={Link} to="/signUp" color="primary">
                                     Sign Up
                                 </Button>

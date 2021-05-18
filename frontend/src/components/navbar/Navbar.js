@@ -13,6 +13,7 @@ import { Home } from '@material-ui/icons';
 import { useStyles } from './styles';
 import Logout from '../dashboard/Logout';
 import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const NavBar = ({ navLinks }) => {
     const classes = useStyles();
@@ -45,4 +46,9 @@ const NavBar = ({ navLinks }) => {
         </AppBar>
     );
 };
+
+NavBar.propTypes = {
+    navLinks: PropTypes.arrayOf(PropTypes.object)
+};
+
 export default NavBar;
