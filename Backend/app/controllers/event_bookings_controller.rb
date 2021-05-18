@@ -1,21 +1,22 @@
+# frozen_string_literal: true
+
 class EventBookingsController < ApplicationController
-  before_action :set_event_booking, only: [:show, :update, :destroy]
-   before_action :set_user,only:[:index, :create]
+  before_action :set_event_booking, only: %i[show update destroy]
+  before_action :set_user, only: %i[index create]
 
   # GET /event_bookings
   def index
-
-    @event_bookings=@current_user.event_bookings  
-  #  @event_bookings = EventBooking.where( id: current_user.id)
+    @event_bookings = @current_user.event_bookings
+    #  @event_bookings = EventBooking.where( id: current_user.id)
 
     render json: @event_bookings
   end
 
   def index_students
-    @event_bookings = EventBooking.joins(:user).where(role: "student")  
-    render json:{event_bookings: @event_bookings}
-
+    @event_bookings = EventBooking.joins(:user).where(role: 'student')
+    render json: { event_bookings: @event_bookings }
   end
+
   # GET /event_bookings/1
   def show
     render json: @event_booking
@@ -32,25 +33,24 @@ class EventBookingsController < ApplicationController
     end
   end
 
-
   # DELETE /event_bookings/1
   def destroy
     @event_booking.destroy
   end
 
   private
-   def set_user
-      @user=current_user 
-    end
-    # Use callbacks to share common setup or constraints between actions.
-    def set_event_booking
-      @event_booking = EventBooking.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def event_booking_params
-      params.fetch(:event_booking, {})
-      # params.require(:room_booking).permit(:available_seats, :starts_at, :ends_at, :room_id)
+  def set_user
+    @user = current_user
+  end
 
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_event_booking
+    @event_booking = EventBooking.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def event_booking_params
+    params.fetch(:event_booking, {})
+  end
 end

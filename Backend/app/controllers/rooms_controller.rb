@@ -1,24 +1,19 @@
+# frozen_string_literal: true
+
 class RoomsController < ApplicationController
-   before_action :set_room, only: [:show, :update, :destroy, :createAvailability, :updateAvailability, :index_availabilities]
-       before_action :authenticate_user!, except: [ :index, :create, :index_availabilities]
+  before_action :set_room,
+                only: %i[show update destroy create_availability update_availability index_availabilities]
 
-
-#
   # GET /rooms
   def index
     @rooms = Room.all
-   if !params[:room_type].blank?
-   @rooms=Room.filter_room(params[:room_type])
-   
-    #     render json: @rooms
-  end
-   render json: @rooms
+    @rooms = Room.filter_room(params[:room_type]) unless params[:room_type].blank?
+    render json: @rooms
   end
 
   def index_availabilities
-   
-    @availabilities=@room.availabilities.all
-    render json: {availabilities: @availabilities}
+    @availabilities = @room.availabilities.all
+    render json: { availabilities: @availabilities }
   end
 
   # GET /rooms/1
@@ -45,21 +40,18 @@ class RoomsController < ApplicationController
       render json: @room.errors, status: :unprocessable_entity
     end
   end
-   #POST  /room/room_id/
-  def createAvailability
-  
+
+  # POST  /room/room_id/
+  def create_availability
     @availability = @room.availabilities.new(availability_params)
-   # @availaility.room_id = room.id
+    # @availaility.room_id = room.id
     @availability.save
-    
   end
-  
-  def updateAvailability
-    #set_room
-    unless @room.blank? && @room.availability.empty?
-    @room.availability.update(availability_params)
-    end
-    render json: "succussfully updated"
+
+  def update_availability
+    # set_room
+    @room.availability.update(availability_params) unless @room.blank? && @room.availability.empty?
+    render json: 'succussfully updated'
   end
 
   # DELETE /rooms/1
@@ -68,17 +60,18 @@ class RoomsController < ApplicationController
   end
 
   private
-    def availability_params
-      params.require(:availability).permit(:starts_at, :ends_at, :day_of_week, :holiday)
-    end
-    # Use callbacks to share common setup or constraints between actions.
-    def set_room
-      @room = Room.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def room_params
-      params.require(:room).permit(:seats_count, :room_type)
-    end
+  def availability_params
+    params.require(:availability).permit(:starts_at, :ends_at, :day_of_week, :holiday)
+  end
 
+  # Use callbacks to share common setup or constraints between actions.
+  def set_room
+    @room = Room.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def room_params
+    params.require(:room).permit(:seats_count, :room_type)
+  end
 end

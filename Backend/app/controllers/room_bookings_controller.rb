@@ -1,12 +1,13 @@
+# frozen_string_literal: true
+
 class RoomBookingsController < ApplicationController
- before_action :set_room_booking, only: [:show, :update, :destroy]
- before_action :set_user,only:[:index, :create]
-  
+  before_action :set_room_booking, only: %i[show update destroy]
+  before_action :set_user, only: %i[index create]
 
   # GET /room_bookings
   def index
     render json: @current_user.room_bookings
-   # render json: @room_bookings.where( id: current_user.id)
+    # render json: @room_bookings.where( id: current_user.id)
   end
 
   # GET /room_bookings/1
@@ -16,7 +17,6 @@ class RoomBookingsController < ApplicationController
 
   # POST /room_bookings
   def create
-
     @room_booking = @current_user.room_bookings.new(room_booking_params)
 
     if @room_booking.save
@@ -32,16 +32,18 @@ class RoomBookingsController < ApplicationController
   end
 
   private
-    def set_user
-      @user=current_user 
-    end
-    # Use callbacks to share common setup or constraints between actions.
-    def set_room_booking
-      @room_booking = RoomBooking.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def room_booking_params
-        params.require(:room_booking).permit(:available_seats, :starts_at, :ends_at, :room_id)
-    end
+  def set_user
+    @user = current_user
+  end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_room_booking
+    @room_booking = RoomBooking.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def room_booking_params
+    params.require(:room_booking).permit(:available_seats, :starts_at, :ends_at, :room_id)
+  end
 end

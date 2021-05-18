@@ -10,12 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_15_093447) do
-
+ActiveRecord::Schema.define(version: 2021_05_18_090152) do
   create_table "availabilities", force: :cascade do |t|
     t.time "starts_at"
     t.time "ends_at"
-    t.datetime "day_of_week"
+    t.integer "day_of_week", default: 0
     t.boolean "holiday"
     t.integer "room_id", null: false
     t.datetime "created_at", precision: 6, null: false

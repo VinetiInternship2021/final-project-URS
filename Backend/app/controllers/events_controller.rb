@@ -1,11 +1,12 @@
-class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :update, :destroy]
-  before_action :set_user,only:[:index, :create]
+# frozen_string_literal: true
 
+class EventsController < ApplicationController
+  before_action :set_event, only: %i[show update destroy]
+  before_action :set_user, only: %i[index create]
 
   # GET /events
   def index
-     @event_bookings=@current_user.events  
+    @event_bookings = @current_user.events
 
     render json: @events
   end
@@ -41,16 +42,18 @@ class EventsController < ApplicationController
   end
 
   private
-    def set_user
-      @user=current_user 
-    end
-    # Use callbacks to share common setup or constraints between actions.
-    def set_event
-      @event = Event.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def event_params
-      params.fetch(:event, {})
-    end
+  def set_user
+    @user = current_user
+  end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_event
+    @event = Event.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def event_params
+    params.fetch(:event, {})
+  end
 end
