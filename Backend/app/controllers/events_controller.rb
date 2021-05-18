@@ -3,12 +3,16 @@
 class EventsController < ApplicationController
   before_action :set_event, only: %i[show update destroy]
   before_action :set_user, only: %i[index create]
-
+  before_action :set_room_booking, only: %i[create]
+ 
   # GET /events
   def index
-    @event_bookings = @current_user.events
-
+    @events = Event.all
+    unless params[:event_type].blank? 
+    @events=@events.where(:event_type =>params[:event_type])
+    end
     render json: @events
+
   end
 
   # GET /events/1
@@ -18,8 +22,13 @@ class EventsController < ApplicationController
 
   # POST /events
   def create
+    if @room_booking.event.blank?
     @event = Event.new(event_params)
-
+    @event.room_booking_id=@room_booking.id
+    @event.event_type=@room_booking.room.room_type
+    else
+    @event = @room_booking.event.new(event_params)
+    end
     if @event.save
       render json: @event, status: :created, location: @event
     else
@@ -41,6 +50,7 @@ class EventsController < ApplicationController
     @event.destroy
   end
 
+
   private
 
   def set_user
@@ -50,10 +60,15 @@ class EventsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_event
     @event = Event.find(params[:id])
+
   end
 
   # Only allow a list of trusted parameters through.
   def event_params
-    params.fetch(:event, {})
+    params.require(:event).permit(:seats_limit, :subject, :description, :event_title)
+  end
+
+  def set_room_booking
+    @room_booking = RoomBooking.find(params[:room_booking_id])
   end
 end
