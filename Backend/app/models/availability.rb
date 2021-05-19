@@ -3,7 +3,7 @@
 class Availability < ApplicationRecord
   belongs_to :room, dependent: :destroy
   validate :end_date_after_start_date
-  enum day_of_week: [:monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday]
+  enum day_of_week: %i[monday tuesday wednesday thursday friday saturday sunday]
   validates :day_of_week, inclusion: { in: day_of_weeks.keys }
 
   private
