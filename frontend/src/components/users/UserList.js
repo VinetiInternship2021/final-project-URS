@@ -8,9 +8,10 @@ import Avatar from '@material-ui/core/Avatar';
 import { Person } from '@material-ui/icons';
 import Button from '@material-ui/core/Button';
 import { useStyles } from './styles';
-import IconButton from "@material-ui/core/IconButton";
+import IconButton from '@material-ui/core/IconButton';
 import { Check, Clear } from '@material-ui/icons';
-import Grid from "@material-ui/core/Grid";
+import Grid from '@material-ui/core/Grid';
+import PropTypes from 'prop-types';
 
 const UserList = function ({ users, isRequester }) {
     const classes = useStyles();
@@ -40,6 +41,11 @@ const UserList = function ({ users, isRequester }) {
             )}
         </List>
     );
+};
+
+UserList.propTypes = {
+    users: PropTypes.arrayOf(PropTypes.object),
+    isRequester: PropTypes.bool
 };
 
 export default UserList;
