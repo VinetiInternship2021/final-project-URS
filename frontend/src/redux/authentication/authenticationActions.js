@@ -1,5 +1,6 @@
 import * as api from './authenticationApi';
 import * as actions from '../reduxConstants';
+import setAuthToken from '../../utils/setAuthToken';
 
 import { registrationFail, loginFail } from './authenticationErrorActions';
 
@@ -11,25 +12,33 @@ export const registerUser = userData => async (dispatch) => {
         window.location.href = './';
     } catch (error) {
         dispatch(registrationFail(error));
+        throw error;
     }
 };
 
 // Login user
 export const loginUser = userData => async (dispatch) => {
     try {
-        const { data } = await api.login(userData);
-        dispatch(setCurrentUser(data));
-        window.location.href = './dashboard';
+        const response = await api.login(userData);
+
+        localStorage.setItem('jwtToken', response.headers['authorization']);
+        setAuthToken(response.headers['authorization']);
+
+        dispatch(setCurrentUser(response.data));
     } catch (error) {
         dispatch(loginFail(error));
+        throw error;
     }
 };
 
 // Log user out
 export const logoutUser = () => async (dispatch) => {
+    localStorage.removeItem('jwtToken');
+    setAuthToken(false);
+
     await api.logout();
+
     dispatch(setCurrentUser({}));
-    window.location.href = './';
 };
 
 // Set logged in user

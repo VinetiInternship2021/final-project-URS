@@ -1,27 +1,24 @@
 import React  from 'react';
-import {
-    Container,
-    Typography
-} from '@material-ui/core';
-import Logout from './Logout';
-import Grid from "@material-ui/core/Grid";
+import { useSelector } from 'react-redux';
+import { Typography, Grid } from "@material-ui/core";
+
+import { useStyles } from './styles';
 
 const Dashboard = function () {
+    const userData = useSelector(state => {
+        return state.auth.user;
+    });
+    const classes = useStyles();
+
     return (
-        <Container>
-            <Grid justify="space-between"
-                container
-                spacing={5}>
-                <Grid item>
-                    <Typography variant="h4"> Dashboard </Typography>
-                </Grid>
-
-                <Grid item>
-                    <Logout></Logout>
-                </Grid>
+        <React.Fragment>
+            <Grid container direction='column' className={classes.profileBlock}>
+                <Typography variant="h2"> Profile </Typography>
+                <Typography> Email: {userData.email} </Typography>
+                <Typography> Name: {userData.name} </Typography>
+                <Typography> Role: Admin </Typography>
             </Grid>
-        </Container>
-
+        </React.Fragment>
     );
 };
 

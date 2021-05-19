@@ -9,7 +9,9 @@ import {
 } from '@material-ui/core';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+
 import { registerUser } from '../../../redux/authentication/authenticationActions';
 import { useStyles } from './styles';
 
@@ -21,13 +23,14 @@ const SignUp =  function () {
         role: 'student'
     });
     const dispatch = useDispatch();
+    const history = useHistory();
     const classes = useStyles();
     let error = useSelector(state => state.auth.registerError);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        dispatch(registerUser(userData));
+        dispatch(registerUser(userData)).then(() => history.push('./'));
     };
 
     return (
