@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :rooms
   get '/rooms/:id/availabilities', to: 'rooms#index_availabilities'
   post '/rooms/:id/create_availability', to: 'rooms#create_availability'
+  put '/rooms/:room_id/availability/:id', to: 'rooms#update_availability'
 
   devise_for :users,
              defaults: { format: :json },

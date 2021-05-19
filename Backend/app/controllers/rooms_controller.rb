@@ -50,7 +50,7 @@ class RoomsController < ApplicationController
 
   def update_availability
     # set_room
-    @room.availability.update(availability_params) unless @room.blank? && @room.availability.empty?
+    @room.availabilities.update(availability_params) # unless @room.blank? && @room.availability.empty?
     render json: 'succussfully updated'
   end
 
