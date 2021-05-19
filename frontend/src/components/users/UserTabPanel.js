@@ -1,5 +1,6 @@
 import Box from '@material-ui/core/Box';
 import React from 'react';
+import PropTypes from 'prop-types';
 
 function UserTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -19,5 +20,11 @@ function UserTabPanel(props) {
         </div>
     );
 }
+
+UserTabPanel.propTypes = {
+    children: PropTypes.any,
+    value: PropTypes.number,
+    index: PropTypes.number
+};
 
 export default UserTabPanel;
