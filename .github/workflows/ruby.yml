@@ -39,7 +39,7 @@ jobs:
       run: bundle exec rails db:test:prepare
     - name: Run rubocop
       working-directory: ./Backend/
-      run: bundle exec rubocop --fail-level A
+      run: bundle exec rubocop --fail-level E
     - name: Run tests
       working-directory: ./Backend/
       run: bundle exec rspec 
