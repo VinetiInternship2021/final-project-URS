@@ -8,25 +8,27 @@ class RoomsController < ApplicationController
   def index
     @rooms = Room.all
     @rooms = Room.filter_room(params[:room_type]) unless params[:room_type].blank?
-    render json: @rooms
+    # render json: @rooms, each_serializer: RoomSerializer, root: false
+    render json: RoomSerializer.new(@rooms).serializable_hash
   end
 
   def index_availabilities
+    options = { include: [:availabilities] }
     @availabilities = @room.availabilities.all
-    render json: { availabilities: @availabilities }
+    #  render json: { availabilities: @availabilities }
+    render json: RoomSerializer.new(@room, options).serializable_hash
   end
 
   # GET /rooms/1
   def show
-    render json: @room
+    render json: RoomSerializer.new(@room).serializable_hash
   end
 
   # POST /rooms
   def create
     @room = Room.new(room_params)
-
     if @room.save
-      render json: @room, status: :created, location: @room
+      render json: RoomSerializer.new(@room).serializable_hash, status: :created, location: @room
     else
       render json: @room.errors, status: :unprocessable_entity
     end
@@ -35,7 +37,7 @@ class RoomsController < ApplicationController
   # PATCH/PUT /rooms/1
   def update
     if @room.update(room_params)
-      render json: @room
+      render json: RoomSerializer.new(@room).serializable_hash
     else
       render json: @room.errors, status: :unprocessable_entity
     end
@@ -43,15 +45,26 @@ class RoomsController < ApplicationController
 
   # POST  /room/room_id/
   def create_availability
+    options = { include: [:availabilities] }
     @availability = @room.availabilities.new(availability_params)
-    # @availaility.room_id = room.id
-    @availability.save
+    if @availability.save
+      render json: RoomSerializer.new(@room, options).serializable_hash, status: :created, location: @room
+    # @availability.save
+    else
+      render json: @availability.errors, status: :unprocessable_entity
+    end
   end
 
   def update_availability
-    # set_room
-    @room.availabilities.update(availability_params) # unless @room.blank? && @room.availability.empty?
-    render json: 'succussfully updated'
+    # options = { include: [:availability] }
+
+    @availability = Availability.find_by(:id => params[:id])
+
+    if @availability.update(availability_params) # unless @room.blank? && @room.availability.empty?
+      render json: AvailabilitySerializer.new(@availability).serializable_hash
+    else
+      render json: @availability.errors, status: :unprocessable_entity
+    end
   end
 
   # DELETE /rooms/1

@@ -7,7 +7,6 @@ class Availability < ApplicationRecord
   validates :day_of_week, inclusion: { in: day_of_weeks.keys }
 
   private
-
   def end_date_after_start_date
     return if ends_at.blank? || starts_at.blank?
 
