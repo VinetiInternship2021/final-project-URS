@@ -1,0 +1,12 @@
+require: 
+  - rubocop-rails
+  - rubocop-rspec
+
+Metrics/LineLength:
+  Max: 200
+
+Metrics/BlockLength:
+  Severity: warning
+
+Style/Documentation:
+  Severity: warning
