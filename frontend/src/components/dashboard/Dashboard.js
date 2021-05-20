@@ -1,6 +1,6 @@
 import React  from 'react';
 import { useSelector } from 'react-redux';
-import { Typography, Grid } from "@material-ui/core";
+import { Typography, Grid } from '@material-ui/core';
 
 import { useStyles } from './styles';
 
@@ -13,7 +13,7 @@ const Dashboard = function () {
     return (
         <React.Fragment>
             <Grid container direction='column' className={classes.profileBlock}>
-                <Typography variant="h2"> Profile </Typography>
+                <Typography variant='h2'> Profile </Typography>
                 <Typography> Email: {userData.email} </Typography>
                 <Typography> Name: {userData.name} </Typography>
                 <Typography> Role: Admin </Typography>
