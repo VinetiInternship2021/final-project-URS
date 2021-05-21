@@ -23,7 +23,6 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(event_params)
     @event.room_booking_id = @room_booking.id
-    @event.event_type = @room_booking.room.room_type
     if @event.save
       render json: @event, status: :created, location: @event
     else
