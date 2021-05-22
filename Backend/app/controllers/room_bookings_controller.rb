@@ -20,7 +20,8 @@ class RoomBookingsController < ApplicationController
     @room_booking = @current_user.room_bookings.new(room_booking_params)
 
     if @room_booking.save
-      render json: @room_booking, status: :created, location: @room_booking
+      render json: SerializerHelper::serialize(:RoomBookingSerializer, @room_booking),status: :created, location: @room_booking
+
     else
       render json: @room_booking.errors, status: :unprocessable_entity
     end
