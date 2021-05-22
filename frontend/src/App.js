@@ -12,6 +12,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
 import NavBar from './components/navbar/Navbar';
 import Users from './components/users/Users';
+import Rooms from './components/rooms/Rooms';
 
 const adminLinks = [
     { title: 'users', path: '/dashboard/users' },
@@ -29,6 +30,7 @@ function App() {
             <PrivateRoute exact path='/dashboard' component={() => <NavBar navLinks={adminLinks}/>}/>
             <PrivateRoute exact path='/dashboard' component={Dashboard}/>
             <PrivateRoute exact path='/dashboard/users' component={Users}/>
+            <PrivateRoute exact path='/dashboard/rooms' component={Rooms}/>
         </Router>
     );
 }
