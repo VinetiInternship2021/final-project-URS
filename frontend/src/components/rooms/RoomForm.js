@@ -69,7 +69,7 @@ const RoomForm = function ({ handleClose, roomId }) {
                                 size='large'
                                 type='submit'
                                 fullWidth>
-                            {'Add'}
+                            { roomId ? 'Edit' : 'Add' }
                         </Button>
                     </ValidatorForm>
               

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import {Button, Dialog, DialogContent} from '@material-ui/core';
+import { Button, Dialog, DialogContent, Typography } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import { useStyles } from './styles';
 import PropTypes from 'prop-types';
@@ -21,7 +21,10 @@ const EditRoom = function ({ roomId }) {
     return (
         <React.Fragment>
             <Dialog open={open} onClose={handleCloseEditRoom} aria-labelledby='form-dialog-title'>
-                <DialogContent>
+                <DialogContent className={classes.dialogContainer}>
+                    <Typography component='h1' variant='h4' align='center'>
+                        Edit room
+                    </Typography>
                     <RoomForm handleClose={handleCloseEditRoom}
                               roomId={roomId}/>
                 </DialogContent>
