@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import * as _ from 'lodash';
+
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
 import { useStyles } from './styles';
 import UserList from './UserList';
 import UserTabPanel from './UserTabPanel';
+import { getUsers } from '../../redux/users/userActions';
+import { UserModel } from '../../models/userModel';
 
 function geProps(index) {
     return {
@@ -13,13 +18,26 @@ function geProps(index) {
     };
 }
 
-const students = [{name: 'John', deactivatedAt: null}, {name: 'Jane', deactivatedAt: new Date()}];
-const professors = [{name: 'Jenna', deactivatedAt: null}, {name: 'Leo', deactivatedAt: new Date()}];
-const requesters = [{name: 'Requester 1'}, {name: 'Requester 2'}];
+const requesters = [{name: 'Requester 1'}];
 
 function UserTabs() {
     const classes = useStyles();
+    const dispatch = useDispatch();
     const [value, setValue] = useState(0);
+    const users = useSelector((state) => {
+        return state.user.users || [];
+    });
+    let students = [];
+    let professors = [];
+
+    if (!_.isEmpty(users)) {
+        students = _.filter(users, user => user.role === UserModel.roles.student);
+        professors = _.filter(users, user => user.role === UserModel.roles.professor);
+    }
+
+    useEffect(() => {
+        dispatch(getUsers());
+    }, [dispatch]);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
