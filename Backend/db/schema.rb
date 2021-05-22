@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_19_180512) do
+ActiveRecord::Schema.define(version: 2021_05_22_070947) do
 
   create_table "availabilities", force: :cascade do |t|
     t.time "starts_at"
@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 2021_05_19_180512) do
   end
 
 # Could not dump table "users" because of following StandardError
-#   Unknown type 'enum' for column 'role'
+#   Unknown type 'num' for column 'role'
 
   add_foreign_key "availabilities", "rooms"
   add_foreign_key "event_bookings", "events"
