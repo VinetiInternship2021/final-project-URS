@@ -3,13 +3,21 @@ import * as actions from '../reduxConstants';
 import setAuthToken from '../../utils/setAuthToken';
 
 import { registrationFail, loginFail } from './authenticationErrorActions';
+import { UserModel } from '../../models/userModel';
 
 // Register user
 export const registerUser = userData => async (dispatch) => {
     try {
-        await api.register(userData);
-        dispatch(setCurrentUser({}));
-        window.location.href = './';
+        const response = await api.register(userData);
+        setToken(response.headers['authorization']);
+
+        const user = new UserModel(response.data?.data);
+        if (user.role === UserModel.roles.student) {
+            dispatch(setCurrentUser(new UserModel(response.data?.data)));
+            return user;
+        } else {
+            dispatch(setCurrentUser({}));
+        }
     } catch (error) {
         dispatch(registrationFail(error));
         throw error;
@@ -20,11 +28,8 @@ export const registerUser = userData => async (dispatch) => {
 export const loginUser = userData => async (dispatch) => {
     try {
         const response = await api.login(userData);
-
-        localStorage.setItem('jwtToken', response.headers['authorization']);
-        setAuthToken(response.headers['authorization']);
-
-        dispatch(setCurrentUser(response.data));
+        setToken(response.headers['authorization']);
+        dispatch(setCurrentUser(new UserModel(response.data?.data)));
     } catch (error) {
         dispatch(loginFail(error));
         throw error;
@@ -47,4 +52,9 @@ export const setCurrentUser = user => {
         type: actions.setCurrentUser,
         payload: user
     };
+};
+
+const setToken = token => {
+    localStorage.setItem('jwtToken', token);
+    setAuthToken(token);
 };

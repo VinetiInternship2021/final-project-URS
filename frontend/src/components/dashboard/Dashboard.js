@@ -16,7 +16,7 @@ const Dashboard = function () {
                 <Typography variant='h2'> Profile </Typography>
                 <Typography> Email: {userData.email} </Typography>
                 <Typography> Name: {userData.name} </Typography>
-                <Typography> Role: Admin </Typography>
+                <Typography> Role: {userData.role} </Typography>
             </Grid>
         </React.Fragment>
     );

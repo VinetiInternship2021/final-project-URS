@@ -5,4 +5,5 @@ export const getRooms = 'GET_ROOMS';
 export const createRoom = 'CREATE_ROOM';
 export const updateRoom = 'UPDATE_ROOM';
 export const deleteRoom = 'DELETE_ROOM';
+export const getUsers = 'GET_USERS';
 export const url = 'http://localhost:3000';
