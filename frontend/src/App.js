@@ -13,6 +13,8 @@ import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
 import NavBar from './components/navbar/Navbar';
 import Users from './components/users/Users';
 import Rooms from './components/rooms/Rooms';
+import { useSelector } from 'react-redux';
+import { UserModel } from './models/userModel';
 
 const adminLinks = [
     { title: 'users', path: '/dashboard/users' },
@@ -20,14 +22,36 @@ const adminLinks = [
     { title: 'events', path: '/dashboard/events' }
 ];
 
+const studentLinks = [];
+
+const professorLinks = [];
+
 function App() {
+    const user = useSelector(state => state.auth.user);
+    const links = getLinks();
+
+    function getLinks() {
+        if (!user) {
+            return;
+        }
+
+        switch (user.role) {
+            case UserModel.roles.admin:
+                return adminLinks;
+            case UserModel.roles.student:
+                return studentLinks;
+            case UserModel.roles.professor:
+                return professorLinks;
+        }
+    }
+
     return (
         <Router>
             <Route exact path='/' component={SignIn}/>
             <Route exact path='/signUp' component={SignUp}/>
 
-            <PrivateRoute path='/dashboard/:page' component={() => <NavBar navLinks={adminLinks}/>}/>
-            <PrivateRoute exact path='/dashboard' component={() => <NavBar navLinks={adminLinks}/>}/>
+            <PrivateRoute path='/dashboard/:page' component={() => <NavBar navLinks={links}/>}/>
+            <PrivateRoute exact path='/dashboard' component={() => <NavBar navLinks={links}/>}/>
             <PrivateRoute exact path='/dashboard' component={Dashboard}/>
             <PrivateRoute exact path='/dashboard/users' component={Users}/>
             <PrivateRoute exact path='/dashboard/rooms' component={Rooms}/>
