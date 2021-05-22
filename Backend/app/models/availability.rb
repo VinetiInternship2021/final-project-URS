@@ -5,8 +5,10 @@ class Availability < ApplicationRecord
   validate :end_date_after_start_date
   enum day_of_week: %i[monday tuesday wednesday thursday friday saturday sunday]
   validates :day_of_week, inclusion: { in: day_of_weeks.keys }
+  validates_associated :room
 
   private
+  
   def end_date_after_start_date
     return if ends_at.blank? || starts_at.blank?
 

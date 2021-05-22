@@ -2,17 +2,17 @@
 
 class RoomBookingsController < ApplicationController
   before_action :set_room_booking, only: %i[show update destroy]
-  before_action :set_user, only: %i[index create]
+  before_action :set_user, only: %i[create]
 
   # GET /room_bookings
   def index
-    render json: @current_user.room_bookings
-    # render json: @room_bookings.where( id: current_user.id)
+   @room_bookings = RoomBooking.all
+    render json: SerializerHelper::serialize(:RoomBookingSerializer, @room_bookings)
   end
 
   # GET /room_bookings/1
   def show
-    render json: @room_booking
+    render json: SerializerHelper::serialize(:RoomBookingSerializer, @room_booking)
   end
 
   # POST /room_bookings

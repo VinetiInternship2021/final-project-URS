@@ -3,12 +3,12 @@
 class EventBookingsController < ApplicationController
   before_action :set_event_booking, only: %i[show update destroy]
   before_action :set_user, only: %i[index create]
+  before_action :set_event, only: %i[create]
+
 
   # GET /event_bookings
   def index
     @event_bookings = @current_user.event_bookings
-    #  @event_bookings = EventBooking.where( id: current_user.id)
-
     render json: @event_bookings
   end
 
@@ -24,10 +24,16 @@ class EventBookingsController < ApplicationController
 
   # POST /event_bookings
   def create
-    @event_booking = @current_user.event_bookings.new(event_booking_params)
+    @event_booking = @current_user.event_bookings.new
+    @event_booking.event_id = @event.id
 
     if @event_booking.save
-      render json: @event_booking, status: :created, location: @event_booking
+      @event.room_booking.available_seats -=1
+      if @event.room_booking.available_seats > 0
+        @event.room_booking.save
+      else render json: @room_booking.errors, status: :unprocessable_entity
+        render json: @event_booking, status: :created, location: @event_booking
+      end
     else
       render json: @event_booking.errors, status: :unprocessable_entity
     end
@@ -43,7 +49,9 @@ class EventBookingsController < ApplicationController
   def set_user
     @user = current_user
   end
-
+  def set_event
+    @event = Event.find(params[:event_id])
+  end
   # Use callbacks to share common setup or constraints between actions.
   def set_event_booking
     @event_booking = EventBooking.find(params[:id])
