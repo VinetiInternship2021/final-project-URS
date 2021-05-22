@@ -5,7 +5,6 @@ import Tab from '@material-ui/core/Tab';
 import { useStyles } from './styles';
 import UserList from './UserList';
 import UserTabPanel from './UserTabPanel';
-import AddUser from './AddUser';
 
 function geProps(index) {
     return {
@@ -36,11 +35,9 @@ function UserTabs() {
                 <Tab label='Requesters' {...geProps(2)} />
             </Tabs>
             <UserTabPanel value={value} index={0}>
-                <AddUser className={classes.addUser}/>
                 <UserList users={students}/>
             </UserTabPanel>
             <UserTabPanel value={value} index={1}>
-                <AddUser className={classes.addUser}/>
                 <UserList users={professors}/>
             </UserTabPanel>
             <UserTabPanel value={value} index={2}>
