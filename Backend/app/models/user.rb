@@ -14,7 +14,7 @@ class User < ApplicationRecord
    enum role: [:admin,:professor,:student]
 
   def active_for_authentication?
-    super && verified?
+    super && active? && verified? 
   end
   
   def inactive_message
