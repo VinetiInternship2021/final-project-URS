@@ -6,7 +6,7 @@ class ApplicationController < ActionController::API
     before_action :configure_permitted_parameters, if: :devise_controller?
     include ActionController::MimeResponds
     respond_to :json
-
+    include ActionController::Helpers
   private
 
     def configure_permitted_parameters
