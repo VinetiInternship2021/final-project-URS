@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import { AvailabilityModel } from './availabilityModel';
 
 export class RoomModel {
     constructor(data) {
@@ -18,6 +19,14 @@ export class RoomModel {
                     break;
             }
         });
+
+        _.each(data.relationships, (v, key) => {
+            switch (key) {
+                case 'availabilities':
+                    this.availabilities = _.map(v || [], availability => new AvailabilityModel(availability));
+                    break;
+            }
+        });
     }
 
     toBackend(data) {
@@ -27,3 +36,8 @@ export class RoomModel {
         };
     }
 }
+
+RoomModel.types = {
+    lecture: 'lecture',
+    conference: 'conference'
+};
