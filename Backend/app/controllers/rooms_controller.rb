@@ -27,6 +27,7 @@ class RoomsController < ApplicationController
   # POST /rooms
   def create
     @room = Room.new(room_params)
+    authorize @room
     if @room.save
       render json: RoomSerializer.new(@room).serializable_hash, status: :created, location: @room
     else

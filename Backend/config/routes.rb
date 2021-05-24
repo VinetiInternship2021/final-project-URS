@@ -12,7 +12,9 @@ Rails.application.routes.draw do
   post '/rooms/:id/create_availability', to: 'rooms#create_availability'
   put '/rooms/:room_id/availability/:id', to: 'rooms#update_availability'
 
+  get 'users/verification', to: 'users#verification'
   resources :users
+
   devise_for :users,
              defaults: { format: :json },
              path: '',

@@ -5,12 +5,16 @@ class UserPolicy < ApplicationPolicy
     end
   end
 
-  def show?
+  def verification?
     @user.role == 'admin'
   end
 
+  def show?
+    @user.role == 'admin' 
+  end
+
   def update?
-    @user.role == 'admin'
+    @user.role == 'admin' || @user.id == @record.id
   end
 
   def destroy?

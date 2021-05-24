@@ -10,8 +10,6 @@ class ApplicationController < ActionController::API
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
     
-
-
   private
 
     def configure_permitted_parameters
