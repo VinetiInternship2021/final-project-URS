@@ -5,6 +5,10 @@ class UserPolicy < ApplicationPolicy
     end
   end
 
+  def index?
+    @user.role == 'admin'
+  end
+
   def verification?
     @user.role == 'admin'
   end

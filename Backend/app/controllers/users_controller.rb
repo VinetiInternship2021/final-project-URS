@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :update, :destroy, :verification]
+  before_action :set_user, only: [:show, :update, :destroy, :verification, :index]
 
   # Get/users/verification
   def verification
