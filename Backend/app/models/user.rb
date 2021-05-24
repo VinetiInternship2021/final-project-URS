@@ -11,7 +11,7 @@ class User < ApplicationRecord
    has_many :room_bookings
    has_many :event_bookings
 
-   enum role: [:admin,:professor,:student]
+   enum role: [:admin, :professor, :student]
 
   def active_for_authentication?
     super && active? && verified? 
