@@ -2,7 +2,7 @@
 
 class EventsController < ApplicationController
   before_action :set_event, only: %i[show update destroy]
-  #before_action :set_user, only: %i[index create]
+  # before_action :set_user, only: %i[index create]
   before_action :set_room_booking, only: %i[create]
 
   # GET /events
@@ -15,7 +15,7 @@ class EventsController < ApplicationController
   end
 
   # GET /events/1
-  def show 
+  def show
     render json: SerializerHelper::serialize(:EventSerializer, @event)
   end
 

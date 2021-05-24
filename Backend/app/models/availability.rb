@@ -8,7 +8,7 @@ class Availability < ApplicationRecord
   validates_associated :room
 
   private
-  
+
   def end_date_after_start_date
     return if ends_at.blank? || starts_at.blank?
 

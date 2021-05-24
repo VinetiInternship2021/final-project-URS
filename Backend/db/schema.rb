@@ -95,7 +95,7 @@ ActiveRecord::Schema.define(version: 2021_05_22_084905) do
   end
 
   add_foreign_key "availabilities", "rooms"
-  add_foreign_key "event_bookings", "events"
+  add_foreign_key "event_bookings", "events" 
   add_foreign_key "event_bookings", "users"
   add_foreign_key "events", "room_bookings"
   add_foreign_key "room_bookings", "rooms"
