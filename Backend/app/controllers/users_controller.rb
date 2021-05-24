@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :update, :destroy,:verification]
+  before_action :set_user, only: [:show, :update, :destroy, :verification]
 
   # Get/users/verification
   def verification
-    @requesters = User.where(verified:false)
+    @requesters = User.where(verified: false)
     authorize @user
     render json: UserSerializer.new(@requesters)
   end
@@ -37,14 +37,13 @@ class UsersController < ApplicationController
     @user.destroy
   end
 
-  
   private
-  
-    def set_user
-      @user = current_user
-    end
 
-    def user_params
-      params.require(:user).permit(:email,:name,:verified,:active)
-    end
+  def set_user
+    @user = current_user
+  end
+
+  def user_params
+    params.require(:user).permit(:email, :name, :verified, :active)
+  end
 end

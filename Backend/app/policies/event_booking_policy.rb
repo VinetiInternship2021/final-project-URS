@@ -4,7 +4,4 @@ class EventBookingPolicy < ApplicationPolicy
       scope.all
     end
   end
-
-  
-  
 end

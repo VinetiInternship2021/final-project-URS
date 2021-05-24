@@ -10,7 +10,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def show?
-    @user.role == 'admin' 
+    @user.role == 'admin'
   end
 
   def update?
