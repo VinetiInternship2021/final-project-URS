@@ -12,9 +12,31 @@ import IconButton from '@material-ui/core/IconButton';
 import { Check, Clear } from '@material-ui/icons';
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { updateUser, deleteUser } from '../../redux/users/userActions';
 
 const UserList = function ({ users, isRequester }) {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    
+    const update = user => {
+        const updated = {
+            active: !user.active
+        };
+        dispatch(updateUser(user.id, updated));
+    };
+
+    const verifyUser = id => {
+        const updated = {
+            verified: true
+        };
+        dispatch(updateUser(id, updated));
+    };
+
+    const declineRequest = id => {
+        dispatch(deleteUser(id));
+    };
+
     return (
         <List dense={true}>
             {users.map(user =>
@@ -26,14 +48,19 @@ const UserList = function ({ users, isRequester }) {
                     </ListItemAvatar>
                     <ListItemText primary={user.name}/>
                     <ListItemSecondaryAction>
-                        {!isRequester ? <Button className={classes.deactivateButton} variant='contained'>
-                            {user.deactivatedAt ? 'Activate' : 'Deactivate'} </Button>
+                        {!isRequester ? 
+                            <Button 
+                                onClick={() => update(user)}
+                                className={classes.deactivateButton} 
+                                variant='contained'>
+                            { user.active ? 'Deactivate' : 'Activate' } 
+                            </Button>
                         : <Grid container>
                             <Grid item xs={6}>
-                                <IconButton> <Check/> </IconButton>
+                                <IconButton onClick={() => verifyUser(user.id)}> <Check/> </IconButton>
                             </Grid>
                             <Grid item xs={6}>
-                                <IconButton> <Clear/> </IconButton>
+                                <IconButton onClick={() => declineRequest(user.id)}> <Clear/> </IconButton>
                             </Grid>
                         </Grid>}
                     </ListItemSecondaryAction>
