@@ -10,4 +10,5 @@ class Event < ApplicationRecord
   # :greater_than => self.room_booking.available_seats}
   validates_associated :event_bookings
   validates :room_booking, presence: true
+  validates_uniqueness_of :room_booking_id
 end

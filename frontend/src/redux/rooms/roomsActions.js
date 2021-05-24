@@ -4,9 +4,9 @@ import { RoomModel } from '../../models/roomModel';
 import * as _ from 'lodash';
 
 // Get rooms
-export const getRooms = () => async (dispatch) => {
+export const getRooms = (type) => async (dispatch) => {
     try {
-        const { data } = await api.getRooms();
+        const { data } = await api.getRooms(type);
         dispatch({type: actions.getRooms, payload: _.map(data.data, room => new RoomModel(room))});
     } catch (error) {
         console.log(error);

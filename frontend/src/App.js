@@ -15,6 +15,7 @@ import Users from './components/users/Users';
 import Rooms from './components/rooms/Rooms';
 import { useSelector } from 'react-redux';
 import { UserModel } from './models/userModel';
+import Events from './components/events/Events';
 
 const adminLinks = [
     { title: 'users', path: '/dashboard/users' },
@@ -24,7 +25,9 @@ const adminLinks = [
 
 const studentLinks = [];
 
-const professorLinks = [];
+const professorLinks = [
+    { title: 'events', path: '/dashboard/events' }
+];
 
 function App() {
     const user = useSelector(state => state.auth.user);
@@ -55,6 +58,7 @@ function App() {
             <PrivateRoute exact path='/dashboard' component={Dashboard}/>
             <PrivateRoute exact path='/dashboard/users' component={Users}/>
             <PrivateRoute exact path='/dashboard/rooms' component={Rooms}/>
+            <PrivateRoute exact path='/dashboard/events' component={Events}/>
         </Router>
     );
 }

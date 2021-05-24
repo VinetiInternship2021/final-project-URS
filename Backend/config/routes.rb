@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   end
   resources :event_bookings, only: %i[update destroy show]
   resources :events, only: %i[destroy update show index] do
-    resources :event_bookings, only: [:create]
+    resources :event_bookings, only: [:create, :index]
   end
   resources :rooms
   get '/rooms/:id/availabilities', to: 'rooms#index_availabilities'
