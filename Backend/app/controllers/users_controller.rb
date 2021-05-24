@@ -23,8 +23,9 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1
   def update
+    @user_to_update = User.find(params[:id])
     authorize @user
-    if @user.update(user_params)
+    if @user_to_update.update(user_params)
       render json: UserSerializer.new(@user)
     else
       render json: @user.errors, status: :unprocessable_entity
