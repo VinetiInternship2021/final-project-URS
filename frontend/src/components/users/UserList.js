@@ -18,7 +18,7 @@ const UserList = function ({ users, isRequester }) {
     return (
         <List dense={true}>
             {users.map(user =>
-                <ListItem key={user.name}>
+                <ListItem key={user.id}>
                     <ListItemAvatar>
                         <Avatar>
                             <Person />

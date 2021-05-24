@@ -4,5 +4,9 @@ export const useStyles = makeStyles({
     profileBlock: {
         padding: '30px',
         margin: '30px'
+    },
+
+    logout: {
+        color: 'white'
     }
 });

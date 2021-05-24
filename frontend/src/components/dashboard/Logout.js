@@ -6,10 +6,12 @@ import { Button } from '@material-ui/core';
 import ExitIcon from '@material-ui/icons/PowerSettingsNew';
 
 import { logoutUser } from '../../redux/authentication/authenticationActions';
+import { useStyles } from './styles';
 
 const Logout =  function () {
     const dispatch = useDispatch();
     const history = useHistory();
+    const classes = useStyles();
 
     const logout = () => {
         dispatch(logoutUser());
@@ -18,7 +20,8 @@ const Logout =  function () {
 
     return (
         <Button onClick={() => logout()}>
-            <ExitIcon /> Logout
+            <ExitIcon className={classes.logout}/>
+            <p className={classes.logout}> Logout </p>
        </Button>
     );
 };
