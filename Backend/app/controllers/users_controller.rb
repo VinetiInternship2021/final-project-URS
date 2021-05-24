@@ -1,17 +1,17 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :update, :destroy, :verification, :index]
+  before_action :set_user, only: [:show, :update, :destroy]
 
   # Get/users/verification
   def verification
     @requesters = User.where(verified: false)
-    authorize @user
+    authorize current_user
     render json: UserSerializer.new(@requesters)
   end
 
   # GET /users
   def index
     @users = User.all
-    authorize @user
+    authorize current_user
     render json: UserSerializer.new(@users)
   end
 
@@ -23,10 +23,9 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1
   def update
-    @user_to_update = User.find(params[:id])
-    authorize @user
-    if @user_to_update.update(user_params)
-      render json: UserSerializer.new(@user_to_update)
+    authorize current_user
+    if @user.update(user_params)
+      render json: UserSerializer.new(@user)
     else
       render json: @user.errors, status: :unprocessable_entity
     end
@@ -34,14 +33,14 @@ class UsersController < ApplicationController
 
   # DELETE /users/1
   def destroy
-    authrize @user
+    authorize current_user
     @user.destroy
   end
 
   private
 
   def set_user
-    @user = current_user
+    @user = User.find(params[:id])
   end
 
   def user_params
