@@ -26,7 +26,7 @@ class UsersController < ApplicationController
     @user_to_update = User.find(params[:id])
     authorize @user
     if @user_to_update.update(user_params)
-      render json: UserSerializer.new(@user)
+      render json: UserSerializer.new(@user_to_update)
     else
       render json: @user.errors, status: :unprocessable_entity
     end
