@@ -15,7 +15,6 @@ export const useStyles = makeStyles((theme) => ({
         marginTop: '50px',
         marginBottom: '20px',
     },
-
     dialogContainer: {
         width: '400px',
 
@@ -27,9 +26,5 @@ export const useStyles = makeStyles((theme) => ({
             height: '60px',
             width: '400px',
         }
-
-    },
-    addUser: {
-        float: 'right'
     }
 }));

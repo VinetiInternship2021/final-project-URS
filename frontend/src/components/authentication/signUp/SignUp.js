@@ -30,7 +30,8 @@ const SignUp =  function () {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        dispatch(registerUser(userData)).then(() => history.push('./'));
+        dispatch(registerUser(userData)).then(user => user ? history.push('./dashboard')
+            : history.push('./'));
     };
 
     return (

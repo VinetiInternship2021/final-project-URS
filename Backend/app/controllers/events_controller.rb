@@ -2,7 +2,7 @@
 
 class EventsController < ApplicationController
   before_action :set_event, only: %i[show update destroy]
-  before_action :set_user, only: %i[index create]
+  #before_action :set_user, only: %i[index create]
   before_action :set_room_booking, only: %i[create]
 
   # GET /events
@@ -11,20 +11,21 @@ class EventsController < ApplicationController
     unless params[:event_type].blank?
       @events = @events.where(:event_type => params[:event_type])
     end
-    render json: @events
+    render json: SerializerHelper::serialize(:EventSerializer, @events)
   end
 
   # GET /events/1
-  def show
-    render json: @event
+  def show 
+    render json: SerializerHelper::serialize(:EventSerializer, @event)
   end
 
-  # POST /events
+  # POST rooms/:id/events
   def create
+    options = { include: [:room_booking] }
     @event = Event.new(event_params)
     @event.room_booking_id = @room_booking.id
     if @event.save
-      render json: @event, status: :created, location: @event
+      render json: SerializerHelper::serialize(:EventSerializer, @event, options), status: :created, location: @event
     else
       render json: @event.errors, status: :unprocessable_entity
     end
@@ -33,7 +34,7 @@ class EventsController < ApplicationController
   # PATCH/PUT /events/1
   def update
     if @event.update(event_params)
-      render json: @event
+      render json: SerializerHelper::serialize(:EventSerializer, @event)
     else
       render json: @event.errors, status: :unprocessable_entity
     end
