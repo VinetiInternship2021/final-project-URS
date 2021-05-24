@@ -21,6 +21,12 @@ export class UserModel {
                 case 'name':
                     this.name = value;
                     break;
+                case 'active':
+                    this.active = value;
+                    break;
+                case 'verified':
+                    this.verified = value;
+                    break;
             }
         });
     }
