@@ -11,4 +11,6 @@ export const getRequesters = 'GET_REQUESTERS';
 export const updateUser = 'UPDATE_USER';
 export const verifyUser = 'VERIFY_USER';
 export const deleteUser = 'DELETE_USER';
+export const createAvailability = 'CREATE_AVAILABILITY';
+export const updateAvailability = 'UPDATE_AVAILABILITY';
 export const url = 'http://localhost:3000';

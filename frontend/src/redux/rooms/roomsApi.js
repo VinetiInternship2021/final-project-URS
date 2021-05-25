@@ -8,6 +8,10 @@ export const getRoomById = (id) => axios.get(`${url}/rooms/${id}`, { headers: { 
 export const createRoom = (room) => axios.post(`${url}/rooms`, room, { headers: { 'Authorization': `${token}`}});
 export const updateRoom = (id, updatedRoom) => axios.put(`${url}/rooms/${id}`, updatedRoom, { headers: { 'Authorization': `${token}`}});
 export const deleteRoom = (id) => axios.delete(`${url}/rooms/${id}`, { headers: { 'Authorization': `${token}`}});
+export const createAvailability = (roomId, availability) =>
+    axios.post(`${url}/rooms/${roomId}/create_availability`, { availability: availability }, { headers: { 'Authorization': `${token}`}});
+export const updateAvailability = (roomId, availabilityId, availability) =>
+    axios.put(`${url}/rooms/${roomId}/availability/${availabilityId}`, { availability: availability }, { headers: { 'Authorization': `${token}`}});
 
 function getRoomsUrl(type) {
     let roomsUrl = `${url}/rooms`;

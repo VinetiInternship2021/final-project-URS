@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import Grid from '@material-ui/core/Grid';
 import { Checkbox, Typography } from '@material-ui/core';
 import DateFnsUtils from '@date-io/date-fns';
@@ -7,8 +7,7 @@ import PropTypes from 'prop-types';
 import { useStyles } from './styles';
 import * as _ from 'lodash';
 
-const Availabilities = function ({ room }) {
-    const [availability, setAvailability] = useState([]);
+const Availabilities = function ({ room, availability, setAvailability }) {
     const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
     useEffect(() => {
@@ -17,12 +16,12 @@ const Availabilities = function ({ room }) {
             availabilities = room.availabilities;
             _.each(days, day => {
                 if (!_.some(availabilities, a => a.dayOfWeek === day)) {
-                    availabilities = [...availabilities, {dayOfWeek: day}];
+                    availabilities = [...availabilities, {dayOfWeek: day, holiday: false}];
                 }
             });
         } else {
             _.each(days, day => {
-                availabilities = [...availabilities, {dayOfWeek: day}];
+                availabilities = [...availabilities, {dayOfWeek: day, holiday: false}];
             });
         }
 
@@ -38,6 +37,12 @@ const Availabilities = function ({ room }) {
     const handleEndAtChange = (date, day) => {
         const av = _.find(availability, av => av.dayOfWeek === day);
         av.endsAt = date;
+        setAvailability(_.map(availability, av1 => av1.dayOfWeek === day ? av : av1));
+    };
+
+    const onHolidayChange = (checked, day) => {
+        const av = _.find(availability, av => av.dayOfWeek === day);
+        av.holiday = checked;
         setAvailability(_.map(availability, av1 => av1.dayOfWeek === day ? av : av1));
     };
 
@@ -88,6 +93,7 @@ const Availabilities = function ({ room }) {
                     <Grid item xs={1} className={classes.isHoliday}>
                         <p className={classes.holidayLabel}>holiday:</p> <Checkbox
                             checked={availability.holiday}
+                            onChange={e => onHolidayChange(e.target.checked, availability.dayOfWeek)}
                             inputProps={{ 'aria-label': 'primary checkbox' }}
                             />
                     </Grid>
@@ -99,7 +105,9 @@ const Availabilities = function ({ room }) {
 };
 
 Availabilities.propTypes = {
-    room: PropTypes.object
+    room: PropTypes.object,
+    availability: PropTypes.array,
+    setAvailability: PropTypes.any
 };
 
 export default Availabilities;

@@ -2,7 +2,8 @@ import * as actions from '../reduxConstants';
 
 const initialState = {
     rooms: [],
-    currentRoom: null
+    currentRoom: null,
+    availabilities: []
 };
 
 export default (state = initialState, action) => {
@@ -31,6 +32,16 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 currentRoom: action.payload
+            };
+        case actions.createAvailability:
+            return {
+                ...state,
+                availabilities: [...state.availabilities, action.payload]
+            };
+        case actions.updateAvailability:
+            return {
+                ...state,
+                availabilities: state.availabilities.map((av) => av.id === action.payload.id ? action.payload : av)
             };
         default:
             return state;

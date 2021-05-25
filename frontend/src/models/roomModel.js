@@ -45,6 +45,6 @@ export class RoomModel {
 }
 
 RoomModel.types = {
-    lecture: 'lecture',
+    class: 'class',
     conference: 'conference'
 };
