@@ -10,12 +10,14 @@ import {
 
 import { createRoom, updateRoom } from '../../redux/rooms/roomsActions';
 import PropTypes from 'prop-types';
+import Availabilities from './Availabilities';
+import { RoomModel } from '../../models/roomModel';
 
 const RoomForm = function ({ handleClose, roomId }) {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [roomData, setRoomData] = useState({
-        roomType: 'lecture',
+        roomType: RoomModel.types.lecture,
         seatsCount: ''
     });
     const room = useSelector((state) => {
@@ -51,8 +53,8 @@ const RoomForm = function ({ handleClose, roomId }) {
                             errorMessages={['This field is required']}
                             value={roomData.roomType}
                             onChange={(e) => setRoomData({...roomData, roomType: e.target.value})}>
-                            <MenuItem value='lecture'>Lecture</MenuItem>
-                            <MenuItem value='conference'>Conference</MenuItem>
+                            <MenuItem value={RoomModel.types.lecture}>Lecture</MenuItem>
+                            <MenuItem value={RoomModel.types.conference}>Conference</MenuItem>
                         </SelectValidator>
                         <TextValidator
                             fullWidth
@@ -63,6 +65,7 @@ const RoomForm = function ({ handleClose, roomId }) {
                             value={roomData.seatsCount}
                             onChange={(e) => setRoomData({...roomData, seatsCount: e.target.value})}
                         />
+                        <Availabilities room={room}/>
                         <Button className={classes.buttonAdd}
                                 variant='contained'
                                 color='primary'
@@ -72,7 +75,7 @@ const RoomForm = function ({ handleClose, roomId }) {
                             { roomId ? 'Edit' : 'Add' }
                         </Button>
                     </ValidatorForm>
-              
+
         </React.Fragment>
     );
 };

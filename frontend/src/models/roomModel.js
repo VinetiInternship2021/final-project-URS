@@ -3,7 +3,6 @@ import { AvailabilityModel } from './availabilityModel';
 
 export class RoomModel {
     constructor(data) {
-        this.id = null;
         this.fromBackend(data);
     }
 
@@ -23,7 +22,7 @@ export class RoomModel {
         _.each(data.relationships, (v, key) => {
             switch (key) {
                 case 'availabilities':
-                    this.availabilities = _.map(v || [], availability => new AvailabilityModel(availability));
+                    this.availabilities = _.map(v.data || [], availability => new AvailabilityModel(availability));
                     break;
             }
         });

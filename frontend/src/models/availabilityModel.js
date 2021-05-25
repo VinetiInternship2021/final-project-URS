@@ -2,7 +2,6 @@ import * as _ from 'lodash';
 
 export class AvailabilityModel {
     constructor(data) {
-        this.id = null;
         this.fromBackend(data);
     }
 
