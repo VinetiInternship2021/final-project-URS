@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 
-export class AvailabilityModel {
+export class RoomBookingModel {
     constructor(data) {
         this.fromBackend(data);
     }
@@ -8,11 +8,8 @@ export class AvailabilityModel {
     fromBackend(data) {
         _.each(data.attributes, (value, key) => {
             switch (key) {
-                case 'day_of_week':
-                    this.dayOfWeek = value;
-                    break;
-                case 'holiday':
-                    this.holiday = value;
+                case 'available_seats':
+                    this.availableSeats = value;
                     break;
                 case 'id':
                     this.id = value;
@@ -22,6 +19,12 @@ export class AvailabilityModel {
                     break;
                 case 'ends_at':
                     this.endsAt = value;
+                    break;
+                case 'user_id':
+                    this.userId = value;
+                    break;
+                case 'room_id':
+                    this.roomId = value;
                     break;
             }
         });

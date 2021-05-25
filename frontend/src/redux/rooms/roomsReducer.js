@@ -1,7 +1,8 @@
 import * as actions from '../reduxConstants';
 
 const initialState = {
-    rooms: []
+    rooms: [],
+    currentRoom: null
 };
 
 export default (state = initialState, action) => {
@@ -25,6 +26,11 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 rooms: state.rooms.filter((room) => room.id !== action.payload)
+            };
+        case actions.getRoomById:
+            return {
+                ...state,
+                currentRoom: action.payload
             };
         default:
             return state;
