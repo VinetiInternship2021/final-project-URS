@@ -7,6 +7,7 @@ class RoomsController < ApplicationController
   # GET /rooms
   def index
     @rooms = Room.all
+    authorize @rooms
     @rooms = Room.filter_room(params[:room_type]) unless params[:room_type].blank?
     render json: SerializerHelper::serialize(:RoomSerializer, @rooms)
   end
@@ -14,19 +15,21 @@ class RoomsController < ApplicationController
   def index_availabilities
     options = { include: [:availabilities] }
     @availabilities = @room.availabilities.all
+    authorize @room
     render json: SerializerHelper::serialize(:RoomSerializer, @room, options)
   end
 
   # GET /rooms/1
   def show
+    authorize @room
     options = { include: [:room_bookings, :availabilities] }
-
     render json: SerializerHelper::serialize(:RoomSerializer, @room, options)
   end
 
   # POST /rooms
   def create
     @room = Room.new(room_params)
+    authorize @room
     if @room.save
       render json: SerializerHelper::serialize(:RoomSerializer, @room), status: :created, location: @room
     else
@@ -36,6 +39,7 @@ class RoomsController < ApplicationController
 
   # PATCH/PUT /rooms/1
   def update
+    authorize @room
     if @room.update(room_params)
       render json: SerializerHelper::serialize(:RoomSerializer, @room)
     else
@@ -47,6 +51,7 @@ class RoomsController < ApplicationController
   def create_availability
     options = { include: [:availabilities] }
     @availability = @room.availabilities.new(availability_params)
+    authorize @room
     if @availability.save
       render json: SerializerHelper::serialize(:RoomSerializer, @room, options), status: :created, location: @room
     else
@@ -55,10 +60,9 @@ class RoomsController < ApplicationController
   end
 
   def update_availability
-     options = { include: [:room] }
-
+    authorize @room
+    options = { include: [:room] }
     @availability = Availability.find_by(:id => params[:id])
-
     if @availability.update(availability_params) # unless @room.blank? && @room.availability.empty?
       render json: SerializerHelper::serialize(:AvailabilitySerializer, @availability, options)
     else
@@ -68,6 +72,7 @@ class RoomsController < ApplicationController
 
   # DELETE /rooms/1
   def destroy
+    authorize @room
     @room.destroy
   end
 

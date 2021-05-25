@@ -2,11 +2,11 @@
 
 class EventBookingsController < ApplicationController
   before_action :set_event_booking, only: %i[show update destroy]
-  # before_action :set_user, only: %i[current_event_bookings create]
   before_action :set_event, only: %i[create index]
 
   def index
     @event_bookings = EventBooking.all
+   # authorize @event_bookings
     @event_bookings = @event_bookings.where(:event_id => params[:event_id])
     render json: SerializerHelper::serialize(:EventBookingSerializer, @event_bookings)
   end
@@ -14,6 +14,7 @@ class EventBookingsController < ApplicationController
   # GET /event_bookings
   def current_event_bookings
     @event_bookings = current_user.event_bookings
+  #  authorize @event_bookings
     render json: SerializerHelper::serialize(:EventBookingSerializer, @event_bookings)
   end
 
@@ -21,8 +22,8 @@ class EventBookingsController < ApplicationController
   def create
     # options = { include: [:event] }
     @event_booking = current_user.event_bookings.new
+   # authorize @event_booking
     @event_booking.event_id = @event.id
-
     if @event_booking.save
       @event.room_booking.available_seats -= 1
       if @event.room_booking.available_seats > 0
@@ -38,14 +39,12 @@ class EventBookingsController < ApplicationController
 
   # DELETE /event_bookings/1
   def destroy
+   # authorize @event_booking
     @event_booking.destroy
   end
 
   private
 
-  # def set_user
-  #   @user = current_user
-  # end
   def set_event
     @event = Event.find(params[:event_id])
   end
