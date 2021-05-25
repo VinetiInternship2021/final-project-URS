@@ -19,7 +19,9 @@ class RoomsController < ApplicationController
 
   # GET /rooms/1
   def show
-    render json: SerializerHelper::serialize(:RoomSerializer, @room)
+    options = { include: [:room_bookings, :availabilities] }
+
+    render json: SerializerHelper::serialize(:RoomSerializer, @room, options)
   end
 
   # POST /rooms
@@ -54,12 +56,12 @@ class RoomsController < ApplicationController
   end
 
   def update_availability
-    # options = { include: [:availability] }
+     options = { include: [:room] }
 
     @availability = Availability.find_by(:id => params[:id])
 
     if @availability.update(availability_params) # unless @room.blank? && @room.availability.empty?
-      render json: SerializerHelper::serialize(:AvailabilitySerializer, @availability)
+      render json: SerializerHelper::serialize(:AvailabilitySerializer, @availability, options)
     else
       render json: @availability.errors, status: :unprocessable_entity
     end

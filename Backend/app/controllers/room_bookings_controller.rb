@@ -22,8 +22,8 @@ class RoomBookingsController < ApplicationController
     if @room_booking.save
       render json: SerializerHelper::serialize(:RoomBookingSerializer, @room_booking), status: :created, location: @room_booking
 
-    else
-      render json: @room_booking.errors, status: :unprocessable_entity
+    # else
+    #   render json: @room_booking.errors, status: :unprocessable_entity
     end
   end
 
