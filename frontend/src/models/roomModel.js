@@ -1,14 +1,17 @@
 import * as _ from 'lodash';
 import { AvailabilityModel } from './availabilityModel';
+import { RoomBookingModel } from './roomBookingModel';
 
 export class RoomModel {
-    constructor(data) {
-        this.id = null;
-        this.fromBackend(data);
+    constructor(data, included) {
+        this.fromBackend(data, included);
     }
 
-    fromBackend(data) {
+    fromBackend(data, included) {
         this.id = data.id;
+        this.availabilities = [];
+        this.roomBookings = [];
+
         _.each(data.attributes, (value, key) => {
             switch (key) {
                 case 'room_type':
@@ -20,11 +23,13 @@ export class RoomModel {
             }
         });
 
-        _.each(data.relationships, (v, key) => {
-            switch (key) {
-                case 'availabilities':
-                    this.availabilities = _.map(v || [], availability => new AvailabilityModel(availability));
-                    break;
+        _.each(included, (include) => {
+            if (include.type === 'availability') {
+                this.availabilities.push(new AvailabilityModel(include));
+            }
+
+            if (include.type === 'room_booking') {
+                this.roomBookings.push(new RoomBookingModel(include));
             }
         });
     }

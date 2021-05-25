@@ -48,12 +48,12 @@ const UserList = function ({ users, isRequester }) {
                     </ListItemAvatar>
                     <ListItemText primary={user.name}/>
                     <ListItemSecondaryAction>
-                        {!isRequester ? 
+                        {!isRequester ?
                             <Button 
                                 onClick={() => update(user)}
-                                className={classes.deactivateButton} 
+                                className={classes.deactivateButton}
                                 variant='contained'>
-                            { user.active ? 'Deactivate' : 'Activate' } 
+                            { user.active ? 'Deactivate' : 'Activate' }
                             </Button>
                         : <Grid container>
                             <Grid item xs={6}>
