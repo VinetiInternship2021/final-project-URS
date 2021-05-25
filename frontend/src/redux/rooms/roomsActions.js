@@ -44,3 +44,12 @@ export const deleteRoom = (id) => async (dispatch) => {
     }
 };
 
+// Get rooms
+export const getRoomById = (id) => async (dispatch) => {
+    try {
+        const { data } = await api.getRoomById(id);
+        dispatch({type: actions.getRoomById, payload: new RoomModel(data.data, data.included)});
+    } catch (error) {
+        console.log(error);
+    }
+};

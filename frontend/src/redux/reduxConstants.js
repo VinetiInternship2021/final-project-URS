@@ -5,6 +5,7 @@ export const getRooms = 'GET_ROOMS';
 export const createRoom = 'CREATE_ROOM';
 export const updateRoom = 'UPDATE_ROOM';
 export const deleteRoom = 'DELETE_ROOM';
+export const getRoomById = 'GET_ROOM_BY_ID';
 export const getUsers = 'GET_USERS';
 export const getRequesters = 'GET_REQUESTERS';
 export const updateUser = 'UPDATE_USER';
