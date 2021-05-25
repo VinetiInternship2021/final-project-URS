@@ -32,6 +32,8 @@ export class RoomModel {
                 this.roomBookings.push(new RoomBookingModel(include));
             }
         });
+
+        console.log(this);
     }
 
     toBackend(data) {

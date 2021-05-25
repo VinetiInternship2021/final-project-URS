@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getRooms } from '../../redux/rooms/roomsActions';
+import { getRooms, getRoomById } from '../../redux/rooms/roomsActions';
 import Button from '@material-ui/core/Button';
 
 import { useStyles } from './styles';
