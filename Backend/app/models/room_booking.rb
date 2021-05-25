@@ -10,8 +10,16 @@ class RoomBooking < ApplicationRecord
 
   validates :user_id, :room_id, :starts_at, :ends_at, presence: true
   validate :ends_at_after_starts_at
+  validate :available?
 
   private
+  def available?
+
+    if RoomBooking.where('room_id= ? AND starts_at <= ? AND ends_at >= ?', self.room_id, self.starts_at, self.ends_at).empty?
+    else
+     errors.add(:starts_at, 'The room is reserved. Please choose another time or another room') 
+   end
+  end
 
   def ends_at_after_starts_at
     return if ends_at.blank? || starts_at.blank?
