@@ -13,4 +13,6 @@ export const verifyUser = 'VERIFY_USER';
 export const deleteUser = 'DELETE_USER';
 export const createAvailability = 'CREATE_AVAILABILITY';
 export const updateAvailability = 'UPDATE_AVAILABILITY';
+export const createRoomBooking = 'CREATE_ROOM_BOOKING';
+export const createEvent = 'CREATE_EVENT';
 export const url = 'http://localhost:3000';

@@ -19,10 +19,12 @@ export class AvailabilityModel {
                     this.id = value;
                     break;
                 case 'starts_at':
-                    this.startsAt = value;
+                    this.startsAt = value &&
+                        `${new Date(value).getUTCHours()}:${new Date(value).getUTCMinutes()<10?'0':''}${new Date(value).getUTCMinutes()}`;
                     break;
                 case 'ends_at':
-                    this.endsAt = value;
+                    this.endsAt = value &&
+                        `${new Date(value).getUTCHours()}:${new Date(value).getUTCMinutes()<10?'0':''}${new Date(value).getUTCMinutes()}`;
                     break;
             }
         });

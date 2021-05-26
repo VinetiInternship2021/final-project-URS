@@ -1,8 +1,6 @@
 import React, {useEffect} from 'react';
 import Grid from '@material-ui/core/Grid';
-import { Checkbox, Typography } from '@material-ui/core';
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers';
+import { Checkbox, TextField, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useStyles } from './styles';
 import * as _ from 'lodash';
@@ -16,12 +14,22 @@ const Availabilities = function ({ room, availability, setAvailability }) {
             availabilities = room.availabilities;
             _.each(days, day => {
                 if (!_.some(availabilities, a => a.dayOfWeek === day)) {
-                    availabilities = [...availabilities, {dayOfWeek: day, holiday: false}];
+                    availabilities = [...availabilities, {
+                        dayOfWeek: day,
+                        holiday: false,
+                        startsAt: '10:00',
+                        endsAt: '20:00'
+                    }];
                 }
             });
         } else {
             _.each(days, day => {
-                availabilities = [...availabilities, {dayOfWeek: day, holiday: false}];
+                availabilities = [...availabilities, {
+                    dayOfWeek: day,
+                    holiday: false,
+                    startsAt: '10:00',
+                    endsAt: '20:00'
+                }];
             });
         }
 
@@ -55,42 +63,38 @@ const Availabilities = function ({ room, availability, setAvailability }) {
                         <Typography className={classes.dayOfWeek}>{availability.dayOfWeek}: </Typography>
                     </Grid>
                     <Grid item xs={4}>
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                            <KeyboardTimePicker
-                                InputProps={{
-                                    disableUnderline: true
-                                }}
-                                margin="normal"
-                                id={`starts-at${availability.dayOfWeek}`}
-                                label="Starts at"
-                                KeyboardButtonProps={{
-                                    'aria-label': 'change time',
-                                }}
-                                className={classes.timePicker}
-                                value={availability.startsAt}
-                                onChange={(date) => handleStartAtChange(date, availability.dayOfWeek)}
-                            />
-                        </MuiPickersUtilsProvider>
+                        <TextField
+                            id={`starts-at${availability.dayOfWeek}`}
+                            label="Starts At"
+                            type="time"
+                            value={availability.startsAt}
+                            onChange={(e) => handleStartAtChange(e.target.value, availability.dayOfWeek)}
+                            className={classes.timePicker}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            inputProps={{
+                                step: 300, // 5 min
+                            }}
+                        />
                     </Grid>
                     <Grid item xs={4}>
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                            <KeyboardTimePicker
-                                InputProps={{
-                                    disableUnderline: true
-                                }}
-                                margin="normal"
-                                id={`ends-at${availability.dayOfWeek}`}
-                                label="Ends at"
-                                KeyboardButtonProps={{
-                                    'aria-label': 'change time',
-                                }}
-                                className={classes.timePicker}
-                                value={availability.endsAt}
-                                onChange={(date) => handleEndAtChange(date, availability.dayOfWeek)}
-                            />
-                        </MuiPickersUtilsProvider>
+                        <TextField
+                            id={`ends-at${availability.dayOfWeek}`}
+                            label="Ends At"
+                            type="time"
+                            value={availability.endsAt}
+                            onChange={(e) => handleEndAtChange(e.target.value, availability.dayOfWeek)}
+                            className={classes.timePicker}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            inputProps={{
+                                step: 300, // 5 min
+                            }}
+                        />
                     </Grid>
-                    <Grid item xs={1} className={classes.isHoliday}>
+                    <Grid item xs={1}>
                         <p className={classes.holidayLabel}>holiday:</p> <Checkbox
                             checked={availability.holiday}
                             onChange={e => onHolidayChange(e.target.checked, availability.dayOfWeek)}

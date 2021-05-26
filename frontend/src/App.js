@@ -19,14 +19,15 @@ import Events from './components/events/Events';
 
 const adminLinks = [
     { title: 'users', path: '/dashboard/users' },
-    { title: 'rooms', path: '/dashboard/rooms' },
-    { title: 'events', path: '/dashboard/events' }
+    { title: 'rooms', path: '/dashboard/rooms' }
 ];
 
-const studentLinks = [];
+const studentLinks = [
+    { title: 'booking', path: '/dashboard/booking' }
+];
 
 const professorLinks = [
-    { title: 'events', path: '/dashboard/events' }
+    { title: 'booking', path: '/dashboard/booking' }
 ];
 
 function App() {
@@ -58,7 +59,7 @@ function App() {
             <PrivateRoute exact path='/dashboard' component={Dashboard}/>
             <PrivateRoute exact path='/dashboard/users' component={Users}/>
             <PrivateRoute exact path='/dashboard/rooms' component={Rooms}/>
-            <PrivateRoute exact path='/dashboard/events' component={Events}/>
+            <PrivateRoute exact path='/dashboard/booking' component={() => <Events/>}/>
         </Router>
     );
 }
