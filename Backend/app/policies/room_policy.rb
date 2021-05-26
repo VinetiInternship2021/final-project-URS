@@ -20,4 +20,12 @@ class RoomPolicy < ApplicationPolicy
   def destroy?
     @user.role == 'admin'
   end
+
+  def create_availability?
+    @user.role = 'admin'
+  end
+
+  def update_availability?
+    @user.role = 'admin'
+  end
 end
