@@ -17,7 +17,6 @@ class RoomBookingsController < ApplicationController
   # POST /room_bookings
   def create
     @room_booking = current_user.room_bookings.new(room_booking_params)
-    authorize @room_booking
     @room = Room.where(:id => params[:room_id]).first
     @room_booking.available_seats = @room.seats_count
     if @room_booking.save

@@ -57,11 +57,11 @@ class RoomsController < ApplicationController
   end
 
   def update_availability
-    authorize @room
-    options = { include: [:room] }
+    #options = { include: [:room] }
     @availability = Availability.find_by(:id => params[:id])
-    if @availability.update(availability_params) # unless @room.blank? && @room.availability.empty?
-      render json: SerializerHelper::serialize(:AvailabilitySerializer, @availability, options)
+    authorize @room
+    if @availability.update(availability_params)
+      render json: SerializerHelper::serialize(:AvailabilitySerializer, @availability)
     else
       render json: @availability.errors, status: :unprocessable_entity
     end
