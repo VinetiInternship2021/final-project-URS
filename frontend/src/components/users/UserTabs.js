@@ -8,7 +8,7 @@ import Tab from '@material-ui/core/Tab';
 import { useStyles } from './styles';
 import UserList from './UserList';
 import UserTabPanel from './UserTabPanel';
-import { getUsers } from '../../redux/users/userActions';
+import { getUsers, getRequesters } from '../../redux/users/userActions';
 import { UserModel } from '../../models/userModel';
 
 function geProps(index) {
@@ -18,25 +18,24 @@ function geProps(index) {
     };
 }
 
-const requesters = [{name: 'Requester 1'}];
-
 function UserTabs() {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [value, setValue] = useState(0);
-    const users = useSelector((state) => {
-        return state.user.users || [];
-    });
+    const users = useSelector(state => state.user.users || []);
+    const requesters = useSelector(state => state.user.requesters || []);
+
     let students = [];
     let professors = [];
 
     if (!_.isEmpty(users)) {
         students = _.filter(users, user => user.role === UserModel.roles.student);
-        professors = _.filter(users, user => user.role === UserModel.roles.professor);
+        professors = _.filter(users, user => user.role === UserModel.roles.professor && user.verified);
     }
 
     useEffect(() => {
         dispatch(getUsers());
+        dispatch(getRequesters());
     }, [dispatch]);
 
     const handleChange = (event, newValue) => {

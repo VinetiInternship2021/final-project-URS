@@ -2,7 +2,6 @@ import * as _ from 'lodash';
 
 export class UserModel {
     constructor(data) {
-        this.id = null;
         this.fromBackend(data);
     }
 
@@ -20,6 +19,12 @@ export class UserModel {
                     break;
                 case 'name':
                     this.name = value;
+                    break;
+                case 'active':
+                    this.active = value;
+                    break;
+                case 'verified':
+                    this.verified = value;
                     break;
             }
         });

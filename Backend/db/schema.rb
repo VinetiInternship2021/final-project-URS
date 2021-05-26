@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(version: 2021_05_25_111138) do
     t.string "name"
     t.boolean "verified", default: false
     t.integer "role", null: false
+    t.boolean "active", default: true, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
