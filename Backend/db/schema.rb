@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_26_154109) do
+ActiveRecord::Schema.define(version: 2021_05_26_163551) do
 
   create_table "availabilities", force: :cascade do |t|
     t.time "starts_at"
@@ -97,8 +97,8 @@ ActiveRecord::Schema.define(version: 2021_05_26_154109) do
 
   add_foreign_key "availabilities", "rooms", on_delete: :cascade
   add_foreign_key "event_bookings", "events", on_delete: :cascade
-  add_foreign_key "event_bookings", "users", on_delete: :cascade
+  add_foreign_key "event_bookings", "users"
   add_foreign_key "events", "room_bookings", on_delete: :cascade
   add_foreign_key "room_bookings", "rooms", on_delete: :cascade
-  add_foreign_key "room_bookings", "users", on_delete: :cascade
+  add_foreign_key "room_bookings", "users"
 end

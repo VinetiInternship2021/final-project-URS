@@ -1,5 +1,5 @@
-class ChangeForeignKeyOnCascadeDelete < ActiveRecord::Migration[6.1]
-  def change
+class ChangeDeleteOnCascade < ActiveRecord::Migration[6.1]
+    def change
   	remove_foreign_key :availabilities, :rooms
   	add_foreign_key :availabilities, :rooms, on_delete: :cascade
 
@@ -7,7 +7,7 @@ class ChangeForeignKeyOnCascadeDelete < ActiveRecord::Migration[6.1]
   	add_foreign_key :event_bookings, :events, on_delete: :cascade
 
   	remove_foreign_key :event_bookings, :users
-  	add_foreign_key :event_bookings, :users, on_delete: :cascade
+  	add_foreign_key :event_bookings, :users
 
   	remove_foreign_key :events, :room_bookings
   	add_foreign_key :events, :room_bookings, on_delete: :cascade
@@ -16,6 +16,6 @@ class ChangeForeignKeyOnCascadeDelete < ActiveRecord::Migration[6.1]
   	add_foreign_key :room_bookings, :rooms, on_delete: :cascade
 
   	remove_foreign_key :room_bookings, :users
-  	add_foreign_key :room_bookings, :users, on_delete: :cascade
+  	add_foreign_key :room_bookings, :users
   end
 end
