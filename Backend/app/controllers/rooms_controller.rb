@@ -58,7 +58,7 @@ class RoomsController < ApplicationController
 
   def update_availability
     #options = { include: [:room] }
-    @availability = Availability.find_by(:id => params[:id])
+    @availability = Availability.find_by(:id => params[:availability_id])
     authorize @room
     if @availability.update(availability_params)
       render json: SerializerHelper::serialize(:AvailabilitySerializer, @availability)
