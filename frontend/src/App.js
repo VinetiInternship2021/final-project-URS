@@ -16,6 +16,8 @@ import Rooms from './components/rooms/Rooms';
 import { useSelector } from 'react-redux';
 import { UserModel } from './models/userModel';
 import Events from './components/events/Events';
+import ProfEvents from './components/profEvents/ProfEvents';
+import RoomBookings from './components/roomBookings/RoomBookings';
 
 const adminLinks = [
     { title: 'users', path: '/dashboard/users' },
@@ -23,11 +25,14 @@ const adminLinks = [
 ];
 
 const studentLinks = [
-    { title: 'booking', path: '/dashboard/booking' }
+    { title: 'booking', path: '/dashboard/booking' },
+    { title: 'room bookings', path: '/dashboard/roomBookings' },
+    { title: 'events', path: '/dashboard/events' }
 ];
 
 const professorLinks = [
-    { title: 'booking', path: '/dashboard/booking' }
+    { title: 'booking', path: '/dashboard/booking' },
+    { title: 'events', path: '/dashboard/events' }
 ];
 
 function App() {
@@ -60,6 +65,8 @@ function App() {
             <PrivateRoute exact path='/dashboard/users' component={Users}/>
             <PrivateRoute exact path='/dashboard/rooms' component={Rooms}/>
             <PrivateRoute exact path='/dashboard/booking' component={() => <Events/>}/>
+            <PrivateRoute exact path='/dashboard/events' component={() => <ProfEvents/>}/>
+            <PrivateRoute exact path='/dashboard/roomBookings' component={() => <RoomBookings/>}/>
         </Router>
     );
 }
