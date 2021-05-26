@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   resources :rooms
   get '/rooms/:id/availabilities', to: 'rooms#index_availabilities'
   post '/rooms/:id/create_availability', to: 'rooms#create_availability'
-  put '/rooms/:room_id/availability/:id', to: 'rooms#update_availability'
+  put '/rooms/:id/availability/:availability_id', to: 'rooms#update_availability'
   get '/event_bookings', to: 'event_bookings#current_event_bookings'
 
   get 'users/verification', to: 'users#verification'
