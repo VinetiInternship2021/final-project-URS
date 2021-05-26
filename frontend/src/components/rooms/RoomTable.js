@@ -49,7 +49,7 @@ function RoomTable ({ rooms }) {
                                 value={filter ? filter.value : 'all'}
                             >
                                 <option value='all'>All</option>
-                                <option value='lecture'>Lecture</option>
+                                <option value='class'>Class</option>
                                 <option value='conference'>Conference</option>
                             </select>
                     },

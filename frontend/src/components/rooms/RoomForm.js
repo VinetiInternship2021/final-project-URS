@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import * as _ from 'lodash';
 
 import { ValidatorForm, TextValidator, SelectValidator } from 'react-material-ui-form-validator';
 import { useStyles } from './styles';
@@ -8,32 +9,49 @@ import {
     MenuItem
 } from '@material-ui/core';
 
-import { createRoom, updateRoom } from '../../redux/rooms/roomsActions';
+import { createRoom, updateRoom, getRoomById, updateAvailability, createAvailability } from '../../redux/rooms/roomsActions';
 import PropTypes from 'prop-types';
+import Availabilities from './Availabilities';
+import { RoomModel } from '../../models/roomModel';
 
 const RoomForm = function ({ handleClose, roomId }) {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [roomData, setRoomData] = useState({
-        roomType: 'lecture',
+        roomType: RoomModel.types.class,
         seatsCount: ''
     });
-    const room = useSelector((state) => {
-        return (roomId ? state.room.rooms.find((room) => room.id === roomId) : null);
-    });
+    const [availability, setAvailability] = useState([]);
+    const room = useSelector(state => roomId ? state.room.currentRoom : null);
 
     useEffect(() => {
-        if (room) {
-            setRoomData(room);
+        if (roomId) {
+            dispatch(getRoomById(roomId)).then(room => setRoomData(room));
         }
-    }, [dispatch, room]);
+    }, [dispatch, roomId]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!roomId) {
-            dispatch(createRoom(roomData));
+            dispatch(createRoom(roomData)).then((room) => {
+                _.each(availability, av => {
+                    if (av.id) {
+                        dispatch(updateAvailability(room.id, av));
+                    } else {
+                        dispatch(createAvailability(room.id, av));
+                    }
+                });
+            });
         } else {
-            dispatch(updateRoom(roomId, roomData));
+            dispatch(updateRoom(roomId, roomData)).then(() => {
+                _.each(availability, av => {
+                    if (av.id) {
+                        dispatch(updateAvailability(roomId, av));
+                    } else {
+                        dispatch(createAvailability(roomId, av));
+                    }
+                });
+            });
         }
 
         handleClose && handleClose();
@@ -51,8 +69,8 @@ const RoomForm = function ({ handleClose, roomId }) {
                             errorMessages={['This field is required']}
                             value={roomData.roomType}
                             onChange={(e) => setRoomData({...roomData, roomType: e.target.value})}>
-                            <MenuItem value='lecture'>Lecture</MenuItem>
-                            <MenuItem value='conference'>Conference</MenuItem>
+                            <MenuItem value={RoomModel.types.class}>Class</MenuItem>
+                            <MenuItem value={RoomModel.types.conference}>Conference</MenuItem>
                         </SelectValidator>
                         <TextValidator
                             fullWidth
@@ -63,6 +81,9 @@ const RoomForm = function ({ handleClose, roomId }) {
                             value={roomData.seatsCount}
                             onChange={(e) => setRoomData({...roomData, seatsCount: e.target.value})}
                         />
+                        <Availabilities room={room}
+                                        availability={availability}
+                                        setAvailability={setAvailability}/>
                         <Button className={classes.buttonAdd}
                                 variant='contained'
                                 color='primary'
@@ -72,7 +93,7 @@ const RoomForm = function ({ handleClose, roomId }) {
                             { roomId ? 'Edit' : 'Add' }
                         </Button>
                     </ValidatorForm>
-              
+
         </React.Fragment>
     );
 };

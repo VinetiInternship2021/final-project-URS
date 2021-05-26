@@ -2,7 +2,6 @@ import * as _ from 'lodash';
 
 export class UserModel {
     constructor(data) {
-        this.id = null;
         this.fromBackend(data);
     }
 

@@ -17,8 +17,8 @@ const EventRooms = function () {
             <div className={classes.roomTypeButtons}>
                 <Button onClick={() => dispatch(getRooms(RoomModel.types.conference))}
                         variant='contained'> Conference </Button>
-                <Button onClick={() => dispatch(getRooms(RoomModel.types.lecture))}
-                        variant='contained'> Lecture </Button>
+                <Button onClick={() => dispatch(getRooms(RoomModel.types.class))}
+                        variant='contained'> Class </Button>
             </div>
 
             {
