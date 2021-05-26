@@ -15,4 +15,6 @@ export const createAvailability = 'CREATE_AVAILABILITY';
 export const updateAvailability = 'UPDATE_AVAILABILITY';
 export const createRoomBooking = 'CREATE_ROOM_BOOKING';
 export const createEvent = 'CREATE_EVENT';
+export const getRoomBookings = 'GET_ROOM_BOOKINGS';
+export const getEvents = 'GET_EVENTS';
 export const url = 'http://localhost:3000';
