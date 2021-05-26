@@ -2,7 +2,7 @@
 
 class Event < ApplicationRecord
   belongs_to :room_booking
-  has_many :event_bookings
+  has_many :event_bookings, dependent: :destroy
   enum event_type: %i[conference lecture]
   validates :event_type, inclusion: { in: event_types.keys }
   validates :seats_limit, :numericality =>

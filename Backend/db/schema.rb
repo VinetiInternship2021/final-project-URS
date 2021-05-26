@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_26_085048) do
+ActiveRecord::Schema.define(version: 2021_05_26_163551) do
 
   create_table "availabilities", force: :cascade do |t|
     t.time "starts_at"
@@ -95,10 +95,10 @@ ActiveRecord::Schema.define(version: 2021_05_26_085048) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "availabilities", "rooms"
-  add_foreign_key "event_bookings", "events"
+  add_foreign_key "availabilities", "rooms", on_delete: :cascade
+  add_foreign_key "event_bookings", "events", on_delete: :cascade
   add_foreign_key "event_bookings", "users"
-  add_foreign_key "events", "room_bookings"
-  add_foreign_key "room_bookings", "rooms"
+  add_foreign_key "events", "room_bookings", on_delete: :cascade
+  add_foreign_key "room_bookings", "rooms", on_delete: :cascade
   add_foreign_key "room_bookings", "users"
 end

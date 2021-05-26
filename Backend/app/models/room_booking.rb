@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class RoomBooking < ApplicationRecord
-  belongs_to :user, dependent: :destroy
-  belongs_to :room, dependent: :destroy
+  belongs_to :user
+  belongs_to :room
   has_one :event
   validates_associated :user, :room
   validates :available_seats, :numericality =>

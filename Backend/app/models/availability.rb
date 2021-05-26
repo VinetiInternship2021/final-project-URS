@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Availability < ApplicationRecord
-  belongs_to :room, dependent: :destroy
+  belongs_to :room
   validate :end_date_after_start_date
   attribute :starts_at, default: Settings.availability_defaults.starts_at
   attribute :ends_at, default: Settings.availability_defaults.ends_at
