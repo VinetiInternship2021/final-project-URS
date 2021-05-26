@@ -5,24 +5,23 @@ class EventBookingsController < ApplicationController
   before_action :set_event, only: %i[create index]
 
   def index
+    options = { include: [:users] }
     @event_bookings = EventBooking.all
-   # authorize @event_bookings
+    authorize @event_bookings
     @event_bookings = @event_bookings.where(:event_id => params[:event_id])
-    render json: SerializerHelper::serialize(:EventBookingSerializer, @event_bookings)
+    render json: SerializerHelper::serialize(:EventBookingSerializer, @event_bookings, options)
   end
 
   # GET /event_bookings
   def current_event_bookings
     @event_bookings = current_user.event_bookings
-  #  authorize @event_bookings
     render json: SerializerHelper::serialize(:EventBookingSerializer, @event_bookings)
   end
 
   # POST /event_bookings
   def create
-    # options = { include: [:event] }
     @event_booking = current_user.event_bookings.new
-   # authorize @event_booking
+    authorize @event_booking
     @event_booking.event_id = @event.id
     if @event_booking.save
       @event.room_booking.available_seats -= 1
@@ -30,7 +29,7 @@ class EventBookingsController < ApplicationController
         @event.room_booking.save
       else render json: @room_booking.errors, status: :unprocessable_entity
       end
-      render json: SerializerHelper::serialize(:EventBookingSerializer, @event_booking), status: :created, location: @event_booking
+      render json: SerializerHelper::serialize(:EventBookingSerializer, @event_booking, options), status: :created, location: @event_booking
 
     else
       render json: @event_booking.errors, status: :unprocessable_entity
@@ -39,7 +38,6 @@ class EventBookingsController < ApplicationController
 
   # DELETE /event_bookings/1
   def destroy
-   # authorize @event_booking
     @event_booking.destroy
   end
 

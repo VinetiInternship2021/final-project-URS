@@ -6,20 +6,18 @@ class RoomBookingsController < ApplicationController
   # GET /room_bookings
   def index
     @room_bookings = RoomBooking.all
-    authorize @room_bookings
     render json: SerializerHelper::serialize(:RoomBookingSerializer, @room_bookings)
   end
 
   # GET /room_bookings/1
   def show
-    authorize @room_booking
     render json: SerializerHelper::serialize(:RoomBookingSerializer, @room_booking)
   end
 
   # POST /room_bookings
   def create
     @room_booking = current_user.room_bookings.new(room_booking_params)
-    authorize @room_bookings
+    authorize @room_booking
     @room = Room.where(:id => params[:room_id]).first
     @room_booking.available_seats = @room.seats_count
     if @room_booking.save
@@ -33,7 +31,7 @@ class RoomBookingsController < ApplicationController
   # DELETE /room_bookings/1
   def destroy
     authorize @room_booking
-    current_user.room_booking.destroy
+    @room_booking.destroy
   end
 
   private

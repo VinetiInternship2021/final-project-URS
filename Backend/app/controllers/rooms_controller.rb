@@ -7,7 +7,6 @@ class RoomsController < ApplicationController
   # GET /rooms
   def index
     @rooms = Room.all
-    authorize @rooms
     @rooms = Room.filter_room(params[:room_type]) unless params[:room_type].blank?
     render json: SerializerHelper::serialize(:RoomSerializer, @rooms)
   end
@@ -15,13 +14,11 @@ class RoomsController < ApplicationController
   def index_availabilities
     options = { include: [:availabilities] }
     @availabilities = @room.availabilities.all
-    authorize @room
     render json: SerializerHelper::serialize(:RoomSerializer, @room, options)
   end
 
   # GET /rooms/1
   def show
-    authorize @room
     options = { include: [:room_bookings, :availabilities] }
     render json: SerializerHelper::serialize(:RoomSerializer, @room, options)
   end

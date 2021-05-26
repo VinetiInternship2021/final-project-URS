@@ -7,7 +7,6 @@ class EventsController < ApplicationController
   # GET /events
   def index
     @events = Event.all
-    authorize @events
     unless params[:event_type].blank?
       @events = @events.where(:event_type => params[:event_type])
     end
@@ -16,7 +15,6 @@ class EventsController < ApplicationController
 
   # GET /events/1
   def show
-    authorize @event
     render json: SerializerHelper::serialize(:EventSerializer, @event)
   end
 
@@ -24,7 +22,7 @@ class EventsController < ApplicationController
   def create
     options = { include: [:room_booking] }
     @event = Event.new(event_params)
-    authorize @events
+    authorize @event
     @event.room_booking_id = @room_booking.id
     if @event.save
       render json: SerializerHelper::serialize(:EventSerializer, @event, options), status: :created, location: @event
