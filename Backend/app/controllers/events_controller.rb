@@ -22,6 +22,7 @@ class EventsController < ApplicationController
   def create
     options = { include: [:room_booking] }
     @event = Event.new(event_params)
+    authorize @event
     @event.room_booking_id = @room_booking.id
     if @event.save
       render json: SerializerHelper::serialize(:EventSerializer, @event, options), status: :created, location: @event
@@ -32,6 +33,7 @@ class EventsController < ApplicationController
 
   # PATCH/PUT /events/1
   def update
+    authorize @event
     if @event.update(event_params)
       render json: SerializerHelper::serialize(:EventSerializer, @event)
     else
@@ -41,14 +43,11 @@ class EventsController < ApplicationController
 
   # DELETE /events/1
   def destroy
-    @event.destroy
+   authorize @event
+   @event.destroy
   end
 
   private
-
-  def set_user
-    @user = current_user
-  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_event

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_25_111138) do
+ActiveRecord::Schema.define(version: 2021_05_26_085048) do
 
   create_table "availabilities", force: :cascade do |t|
     t.time "starts_at"
