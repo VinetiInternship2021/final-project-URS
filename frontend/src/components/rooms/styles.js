@@ -22,11 +22,8 @@ export const useStyles = makeStyles(() => ({
         padding: 0
     },
     dayOfWeek: {
-        paddingTop: '30px',
+        paddingTop: '20px',
         fontWeight: 'bold'
-    },
-    isHoliday: {
-        paddingTop: '10px'
     },
     holidayLabel: {
         margin: 0,

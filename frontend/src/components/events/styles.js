@@ -11,5 +11,17 @@ export const useStyles = makeStyles({
         margin: '0 auto',
         padding: '10px',
         width: '50%'
+    },
+    roomTypeButton: {
+        marginRight: '10px'
+    },
+    roomTypeTitle: {
+        textAlign: 'center',
+    },
+    eventCalendar: {
+        marginTop: '20px'
+    },
+    times: {
+        margin: '5px'
     }
 });

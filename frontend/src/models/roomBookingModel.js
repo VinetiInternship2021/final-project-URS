@@ -6,6 +6,7 @@ export class RoomBookingModel {
     }
 
     fromBackend(data) {
+        this.id = data.id;
         _.each(data.attributes, (value, key) => {
             switch (key) {
                 case 'available_seats':
@@ -28,5 +29,14 @@ export class RoomBookingModel {
                     break;
             }
         });
+    }
+
+    toBackend(data) {
+        return {
+            available_seats: data.availableSeats,
+            starts_at: data.startsAt,
+            ends_at: data.endsAt,
+            room_id: data.roomId
+        };
     }
 }
